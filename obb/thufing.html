@@ -1,0 +1,190 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>thufing</title>
+</head>
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:san-serif;
+}
+body{
+background:#0f1115;
+color:#e6e8ef;
+min-height:100vh;
+}
+#header{
+max-width:700px;
+margin:0 auto;
+padding:18px;
+}
+
+.logo{
+display:flex;
+align-items:baseline;
+gap:2px;
+font-size:28px;
+font-weight:900;
+letter-spacing:-1px;
+margin-bottom:18px;
+}
+.logo span:first-child{
+color:#fff;
+}
+.logo span:last-child{
+color:#7c5cff;
+}
+
+.controls{
+display:flex;
+gap:10px;
+align-items:center;
+flex-wrap:wrap;
+}
+#lang{
+background:#1e212e;
+color:#cbd0e0;
+border:1px solid #2d3246;
+padding:10px 16px;
+border-radius:99px;
+font-size:14px;
+outline:none;
+}
+
+.search-box{
+flex:1;
+display:flex;
+gap:8px;
+background:#1a1d29;
+border:1.5px solid #2d3246;
+border-radius:16px;
+padding:6px 6px 6px 16px;
+min-width:200px;
+}
+.search-box:focus-within{
+border-color:#7c5cff;
+}
+#zawnna{
+flex:1;
+background:transparent;
+border:none;
+color:#fff;
+font-size:15px;
+outline:none;
+}
+#search{
+background:#7c5cff;
+color:#fff;
+border:none;
+padding:10px 18px;
+border-radius:12px;
+font-weight:700;
+cursor:pointer;
+}
+
+#result{
+max-width:700px;
+margin:20px auto;
+padding:0 18px;
+display:grid;
+gap:12px;
+}
+.fing{
+background:#181b27;
+border:1px solid #232738;
+border-radius:16px;
+padding:18px;
+border-left:3px solid #7c5cff;
+}
+.fing .mizo{
+font-size:16px;
+font-weight:700;
+color:#fff;
+line-height:1.6;
+}
+.finglo{
+background:#1C0303;
+border:1px solid #B06B6B;
+border-radius:16px;
+padding:18px;
+border-left:3px solid #FF0000;
+}
+.finglo .mizo{
+font-size:16px;
+font-weight:700;
+color:#fff;
+line-height:1.6;
+}
+
+</style>
+<body>
+
+<div id="header">
+<div class="logo"<span>mizo</span><span>thufing</span>
+</div>
+
+<div class="controls">
+<select id="lang">
+<option value="lusei">Lusei</option>
+<option value="hmar">Hmar</option>
+</select>
+</div>
+
+<div class="search-box">
+<input type="text" id="zawnna" placeholder="zawn awlna..." onkeyup="find()">
+<button id="search">Search</button>
+</div>
+</div>
+
+<div id="result"></div>
+
+</body>
+<script src="thufing.js"></script>
+<script>
+
+function find(){
+var q=document.getElementById('zawnna').value.toLowerCase().trim();
+var l=document.getElementById('lang').value;
+var r=document.getElementById('result');
+r.innerHTML = "";
+
+var found=0;
+var limit=(q=="")? 30: 60;
+
+for(var i=0;i<data.length;i++){
+var d=data[i];
+
+var textToSearch="";
+for(var key in d)
+textToSearch = d.main.toLowerCase();
+
+if(q=="" ||textToSearch.includes(q)){
+found++;
+
+if(d[l]){
+r.innerHTML += "<div class='fing'><div class='mizo'>"+d.main+"</div><br>~"+d.dis+"<div class='difi'><small style='color:grey'>"+d[l]+"</small></div></div>";
+}
+if(found>=limit)break;
+}
+}
+if(found==0){
+r.innerHTML = "<div class='finglo'><div class='mizo'>i thil zawn hi a awm rihlo.</div></div>";
+}
+}
+
+function loadOnStart(){
+if(typeof data== "undefined" || data.length==0){
+setTimeout(loadOnStart, 300);
+return;
+}
+find();
+}
+window.addEventListener("load", loadOnStart);
+document.getElementById('lang').addEventListener('change',find);
+
+</script>
+</html>
