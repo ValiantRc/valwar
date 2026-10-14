@@ -129,6 +129,14 @@ gap:10px;
 max-width:600px;
 margin:auto;
 }
+.conclus{
+padding:16px;
+  didplay:grid;
+  gap:10px;
+  max-width:600px;
+  margin:auto;
+}
+
 .item{
 padding:14px 16px;
 background:#1e212e;
@@ -170,33 +178,6 @@ color:#fff;
 background:#7c5cff;
 }
 
-.conclus{
-bottom:0;
-position:fixed;
-z-index:999;
-box-sizing:border-box;
-}
-.conclus-btom{
-max-width:600px;
-min-width:100dvh;
-display:flex;
-width:100%;
-height:30px;
-background:#181b27;
-border-top:1px solid #232738;
-}
-.conclus-btom div{
-text-align:center;
-border:1px solid #232738;
-width:100%;
-border-radius:9px;
-}
-.conclus-btom div:hover{
-border-color:#7c5cff;
-color:#7c5cff;
-text-shadow:0 0 10px #7c5fff;
-}
-
 .conclus a{
 text-decoration:none;
 color:#ffff;
@@ -214,20 +195,7 @@ padding:10px;
 }
 #opt div:hover{
 border-color:#7c5cff;
-}
-#men{
-width:45%;
-left:55;
-}
-#men div{
-text-align:center;
-border:1px solid #232738;
-background:#181b27;
-border-radius:9px;
-padding:10px;
-}
-#men div:hover{
-border-color:#7c5cff;
+  }
 
 </style>
 </head>
@@ -258,6 +226,7 @@ border-color:#7c5cff;
 <div class="select">
 <div id="trans">Translation</div>
 <div id="sens">Sentence</div>
+  <div id="option">option</div>
 </div>
 
 </div>
@@ -273,24 +242,13 @@ border-color:#7c5cff;
 <div id="result"></div>
 </div>
 
-</div>
-
-<div class="conclus">
+<div id="conclus">
 <div id="opt">
+<a href="tawngupa.html"><div>Tawng upa leh Thuhar</div></a>
+<a href="thufing.html"><div>Thufing</div></a>
 <a href="../about.html"><div>About</div></a>
 <a href="../contact.html"><div>Contact</div></a>
 <a href="../privacy.html"><div>Privacy</div></a>
-</div>
-
-<div id="men">
-<a href="tawngupa.html"><div>Tawng upa leh Thuhar</div></a>
-<a href="thufing.html"><div>Thufing</div></a>
-</div>
-
-<div class="conclus-btom">
-<div id="option">option</div>
-<div id="menu">menu</div>
-<div id="valwar">Valwar</div>
 </div>
 
 </div>
@@ -308,44 +266,14 @@ const takbody = document.getElementById("takbody");
 const takpeng = document.getElementById("takpeng");
 
 const option = document.getElementById("option");
-const menu = document.getElementById("menu");
-const valwar = document.getElementById("valwar");
 
-const opt = document.getElementById("opt");
-const men = document.getElementById("men");
+const conclus = document.getElementById("conclus");
+  
+const unAll = document.querySelectorAll('#sens,#trans,#option');
+const takAll = document.querySelectorAll('#takbody,#takpeng,#conclus');
 
-const unAll = document.querySelectorAll('#sens,#trans');
-const takAll = document.querySelectorAll('#takbody,#takpeng');
 
-const consAll = document.querySelectorAll('#opt,#men');
-const concluAll = document.querySelectorAll('#option,#menu');
 
-consHide();
-
-function consHide(){
-consAll.forEach(conclue=>{
-conclue.style.display = 'none';
-});
-concluAll.forEach(concluesion=>{
-concluesion.style.background='#181b27';
-});
-}
-
-option.onclick = function(){
-consHide();
-option.style.background = '#7c5cff';
-opt.style.display = 'block';
-}
-
-menu.onclick = function(){
-consHide();
-menu.style.background = '#7c5cff';
-men.style.display = 'block';
-}
-
-valwar.onclick = function(){
-consHide();
-}
 
 function unSel(){
 unAll.forEach(sel=>{
@@ -368,6 +296,12 @@ sens.onclick = function(){
 unSel();
 sens.style.background = '#7c5cff';
 takpeng.style.display = 'block';
+}
+  
+option.onclick = function(){
+  unSel() ;
+  option. style. display = '#7c5cff';
+conclus.style.display = 'block';
 }
 
 function swapLang(){
