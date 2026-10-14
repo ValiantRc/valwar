@@ -1,0 +1,158 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valwar</title>
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-sarif;
+}
+body{
+background:#f8fafc;
+}
+nav{
+background:#fff;
+padding:20px 5%;
+display:flex;
+justify-content:space-between;
+align-items:center
+box-shadow:0 2px 10px rgba(0,0,0,0.05);
+}
+#logo{
+font-size:26px;
+font-weight:800;
+color:#2563eb;
+letter-spacing:-1px;
+}
+.menu a{
+margin-left:28px;
+text-decoration:none;
+color:#475569;
+font-weight:600;
+}
+.menu a:hover{
+color:#2563eb;
+}
+.hero{
+background:linear-gradient(135deg,#eff6ff,#dbeafe);
+padding:80px 5%;
+text-align:center;
+}
+.hero h1{
+font-size:46px;
+color:#1e3a8a;
+font-weight:800;
+}
+.hero a{
+text-decoration:none;
+}
+.text-change{
+color:#64748b;
+margin:15px auto;
+max-width:600px;
+font-size:18px;
+linear-height:1.6;
+display: inline-block;
+animation: fade 0.5s;
+}
+.cards{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:24px;
+padding:40px 5%;
+max-width:1100px;
+margin:0 auto;
+}
+.card{
+background:#fff;
+border-radius:20px;
+padding:30px;
+border:1px solid #e2e8f0;
+text-decoration:none;
+color:#1e293b;
+transition:0.3s;
+}
+.card:hover{
+transform: translateY(-6px);
+box-shadow:0 20px 30px rgba(0,0,0,0.07);
+border-color:#2563eb;
+}
+.card h3{
+font-size:22px;
+margin-bottom:10px;
+}
+.card p{
+color:#64748b;
+font-size:15px;
+line-height:1.5;
+display:none;
+}
+.card:hover p{
+display:block;
+}
+footer{
+text-align:center;
+padding:30px;
+color:#94a3b8;
+}
+@media(max-width:600){
+.cards{
+grid-template-columns:1fr;
+}
+.hero h1{
+font-size:32px;
+}
+}
+@keyframes fade {
+0% {opacity: 0; transform: translateY(20px);}
+100% {opacity: 1; transform: translateY(0);}
+}
+
+</style>
+</head>
+<body>
+
+<nav>
+<div id="logo">Valwar.</div>
+<div class="menu">
+<a href="about.html">About</a>
+<a href="contact.html">Contact</a>
+<a href="privacy.html">Privacy</a>
+</div>
+</nav>
+
+<section class="hero">
+<h1><a href="obb/thufing.html">Mizo Ṭawng Hausakna</a></h1>
+<span class = "text-change" id="text-change">Bei la, bei nawn rawh.</span>
+</section>
+
+<div class="cards">
+<a href="obb/dictionary.html" class="card">
+<h3>Dictionary</h3>
+<p>Thumal 1,000+.Mizo hnam peng ṭawng hrang hrang awmna hmun, Hetah hian thumal hrang hrang a awm.</p></a>
+<a href="obb/tawngUpa.html" class="card">
+<h3>Ṭawng upa leh thuhar</h3>
+<p>Mizo ṭawng upa leh thuhardeuh dahkhawmna.</p></a>
+</div>
+
+<footer>2026 VALARIS | Kan hnam tan</footer>
+</body>
+<script src="obb/homeData.js"></script>
+<script>
+let index = 0;
+const textElement = document.getElementById("text-change");
+
+setInterval(() => {
+index = (index + 1) % data.length;
+textElement.style.animation = "none";
+setTimeout(() => {
+textElement.textContent = data[index];
+textElement.style.animation = "fade 0.5s";
+}, 100);
+}, 2000);
+</script>
+</html>

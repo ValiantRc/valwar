@@ -1,0 +1,181 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>tawng upa</title>
+</head>
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:sans-serif;
+}
+body{
+background:#0f1115;
+color:#fff;
+}
+#container{
+max-width:650px;
+margin:0 auto;
+padding:16px;
+}
+
+.top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:12px 0 24px 0;
+}
+.logo{
+font-size:24px;
+font-weight:900;
+letter-spacing:-0.5px;
+}
+.logo span{
+color:#7c5cff;
+}
+#Lang{
+background:#1c1f2a;
+color:#cbd0e0;
+border:1px solid #2b3042;
+padding:8px 16px;
+border-radius:99px;
+font-size:14px;
+outline:none;
+}
+
+#box{
+display:flex;
+align-items:center;
+background:#1c1f2a;
+border:1px solid #2b3042;
+border-radius:16px;
+padding:6px 6px 6px 16px;
+tarnsition:0.2s;
+}
+#box:focus-within{
+border-color:#7c5cff;
+}
+#search{
+flex:1;
+background:transparent;
+border:none;
+color:#fff;
+font-size:16px;
+outline:none;
+padding:10px 0;
+}
+#find{
+background:#7c5cff;
+color:#fff;
+border:none;
+padding:11px 22px;
+border-radius:12px;
+font-weight:700;
+cursor:pointer;
+}
+
+#result{
+margin-top:20px;
+display:grid;
+gap:10px;
+}
+
+.fing{
+background:#181b27;
+border:1px solid #232738;
+border-radius:16px;
+padding:18px;
+border-left:3px solid #7c5cff;
+}
+.fing .tawng{
+font-size:16px;
+font-weight:700;
+color:#fff;
+line-height:1.6;
+}
+.finglo{
+background:#1C0303;
+border:1px solid #B06B6B;
+border-radius:16px;
+padding:18px;
+border-left:3px solid #FF0000;
+}
+.finglo .tawng{
+font-size:16px;
+font-weight:700;
+color:#fff;
+line-height:1.6;
+}
+
+</style>
+<body>
+<div id="container">
+
+<div class="top">
+<div class="logo">
+ṭawng<span>upa</span>
+</div>
+<select id="lang">
+<option value="lusei">Lusei</option>
+<option value="hmar">Hmar</option>
+</select>
+</div>
+
+<div id="box">
+<input type="text" id="search" placeholder="zawn awlna..." onkeyup ="find()">
+<button id="find">Search</button>
+</div>
+
+<div id="result">
+
+</div>
+</div>
+</body>
+<script src="tawngupa.js"></script>
+<script>
+
+function find(){
+var q=document.getElementById('search').value.toLowerCase().trim();
+var l=document.getElementById('lang').value;
+var r=document.getElementById('result');
+r.innerHTML = "";
+
+var found=0;
+var limit=(q=="")? 30: 60;
+
+for(var i=0;i<data.length;i++){
+var d=data[i];
+
+var textToSearch="";
+for(var key in d)
+textToSearch = d.main.toLowerCase();
+
+if(q=="" ||textToSearch.includes(q)){
+found++;
+
+if(d[l]){
+r.innerHTML += "<div class='fing'><div class='tawng'>"+d.main+"</div><br><small style='color:grey'>"+d[l]+"</small></div>";
+}
+if(found>=limit)break;
+}
+}
+if(found==0){
+r.innerHTML = "<div class='finglo'><div class='tawng'>i thil zawn hi a awm rihlo.</div></div>";
+}
+}
+
+function loadOnStart(){
+if(typeof data== "undefined" || data.length==0){
+setTimeout(loadOnStart, 300);
+return;
+}
+find();
+}
+window.addEventListener("load", loadOnStart);
+document.getElementById('lang').addEventListener('change',find);
+
+</script>
+</html>
