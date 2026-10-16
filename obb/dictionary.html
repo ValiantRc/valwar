@@ -313,41 +313,67 @@ t.value=temp;
 find();
 }
 
+let filteredResults = [];
+let displayedCount = 0;
+const PAGE_SIZE = 20;
+
 function find(){
 var q=document.getElementById("box").value.toLowerCase().trim();
 var from=document.getElementById("fromLang").value;
 var to=document.getElementById("toLang").value;
 var r=document.getElementById("result");
 var z=document.getElementById("zawn");
+
 r.innerHTML="";
 z.innerHTML="";
+filteredResults = [];
+displayedCount = 0;
 
-var found=0;
-
-for(var i=0;i<data.length;i++){
-var d=data[i];
-
+for(let i=0;i<data.length;i++){
+let d=data[i];
 if(q=="" || d[from].toLowerCase().indexOf(q)>=0){
-found++;
-r.innerHTML += "<div class='item'><b>"+from.toUpperCase()+":</b>"+d[from]+"<br><b>"+to.toUpperCase()+":</b>"+d[to]+"</div>";
+filteredResults.push(d);
 }
 }
-if(found==0){
+for(let i=0;i<thu.length;i++){
+let th=thu[i];
+if(q=="" || th[from].toLowerCase().indexOf(q)>=0){
+filteredResults.push(th);
+}
+}
+
+if(filteredResults.length==0){
 r.innerHTML ="<div class='items'>'"+q+"' tih hi ah a awm rihlo.</div>";
-}
-for(var i=0;i<thu.length;i++){
-var t=thu[i];
-
-if(q=="" || t[from].toLowerCase().indexOf(q)>=0){
-found++;
-z.innerHTML += "<div class='item'><b>"+from.toUpperCase()+":</b>"+t[from]+"<span class='tag'>"+t.gr+"</span><br><b>"+to.toUpperCase()+":</b>"+t[to]+"<br><small style='color:grey'>"+t.desc+"</small></div>";
-}
-}
-if(found==0){
 z.innerHTML ="<div class='items'>'"+q+"' tih hi ah a awm rihlo.</div>";
-}
+return;
 }
 
+renderMore();
+}
+
+function renderMore(){
+var from=document.getElementById("fromLang").value;
+var to=document.getElementById("toLang").value;
+var r=document.getElementById("result");
+var z=document.getElementById("zawn");
+
+var nextCount = displayedCount + PAGE_SIZE;
+for(var i=displayedCount; i<nextCount && i<filteredResults.length; i++){
+var d = filteredResults[i];
+var th = filteredResults[i];
+r.innerHTML += "<div class='item'><b>"+from.toUpperCase()+":</b>"+d[from]+"<br><b>"+to.toUpperCase()+":</b>"+d[to]+"</div>";
+z.innerHTML += "<div class='item'><b>"+from.toUpperCase()+":</b>"+th[from]+"<span class='tag'>"+th.gr+"</span><br><b>"+to.toUpperCase()+":</b>"+th[to]+"<br><small style='color:grey'>"+th.desc+"</small></div>";
+}
+displayedCount = nextCount;
+}
+
+window.addEventListener('scroll', function(){
+if(window.innerHeight + window.scrollY >= document.body.offsetHeight - 200){
+if(displayedCount < filteredResults.length){
+renderMore;
+}
+}
+});
 
 function loadOnStart(){
 if(typeof data == "undefined" || data.length == 0){
