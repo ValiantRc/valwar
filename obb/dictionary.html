@@ -370,7 +370,7 @@ displayedCount = nextCount;
 window.addEventListener('scroll', function(){
 if(window.innerHeight + window.scrollY >= document.body.offsetHeight - 200){
 if(displayedCount < filteredResults.length){
-renderMore;
+renderMore();
 }
 }
 });
