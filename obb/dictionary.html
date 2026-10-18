@@ -113,7 +113,19 @@ display:flex;
 .select div:hover{
 border-color:#7c5cff;
 }
+.select #trans{
+  background:#7c5cff;
+}
 
+#takbody{
+  display:block;
+}
+#takpeng{
+  display:none;
+}
+#conclus{
+  display:none;
+}
 #result{
 padding:16px;
 display:grid;
@@ -282,8 +294,6 @@ takAll.forEach(tak=>{
 tak.style.display = 'none';
 });
 }
-
-unSel();
 
 trans.onclick = function(){
 unSel();
