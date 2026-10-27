@@ -35,8 +35,6 @@ let thingImg = new Image()
 thingImg.src = 'thing.png'
 let hnahImg = new Image()
 hnahImg.src = 'hnah.png'
-let rulImg = new Image()
-rulImg.src = 'rul.png'
 
 function createLung() {
   obstacle.push({
