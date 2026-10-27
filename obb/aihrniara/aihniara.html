@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="icon" type="image/png" href="menu.png">
+<title>Aihniara</title>
+<style>
+body { margin: 0; overflow: hidden;
+background: #000; touch-action: none; }
+canvas { display: none; background: linear-gradient(to bottom, #8A88F0 0%, #87CEEB 65%,#789F84 0%); 
+}
+#mainMenu{
+  position: absolute;
+  left:0;
+  top:0;
+  z-index:30;
+  display:none;
+  flex-direction:column;
+  height:100%;
+  width:100%;
+  background:#87ceeb;
+  justify-content:center;
+  align-items:center;
+}
+#mainMenu button{
+  width:220px;padding:15px;margin:8px;
+  background:#ffeb3b;border:4px solid #000;
+  font-size:18px;font-weight:bold;
+  box-shadow:6px 6px 0 #000;
+  cursor:pointer;
+}
+#mainMenu button:active{transform:translate(3px,3px);box-shadow:3px 3px 0 #000}
+
+#scoreTxt{
+  display:none;
+  position:fixed;
+  z-index: 40;
+  width:40px;
+  height:20px;
+  top:20px;
+  left:20px;
+}
+
+#end{
+  position: absolute;
+  left:0;
+  top:0;
+  z-index:30;
+  display:none;
+  flex-direction:column;
+  height:100%;
+  width:100%;
+  background:#87ceeb;
+  justify-content:center;
+  align-items:center;
+}
+
+#end button{
+  padding:15px;
+  margin:8px;
+   width:220px;
+  background:#ffeb3b;border:4px solid #000;
+  font-size:18px;font-weight:bold;
+  box-shadow:6px 6px 0 #000;
+  cursor:pointer;
+}
+#end button:active{transform:translate(3px,3px);box-shadow:3px 3px 0 #000}
+
+</style>
+</head>
+<body>
+ <div id="gameContainer">
+  <div id="loadingScreen" style="position:absolute; width:100%; height:100%; background:#87CEEB; display:flex; flex-direction:column; justify-content:center; align-items:center; z-index:10;">
+   <h2 style="color:white; font-family:Arial;">LOADING...</h2>
+  <div style="width:200px; height:20px; background:white; border-radius:10px; overflow:hidden;">
+   <div id="loadingBar" style="width:0%; height:100%; background:green; transition:0.2s;"></div>
+  </div>
+ <p id="loadingText" style="color:white;">0%</p>
+ </div>
+
+<canvas id="game" style="display:none;"></canvas>
+
+<div id="scoreTxt">
+  Score:<span id="score" onclick="resetGame()">0</span>
+</div>
+
+<div id="mainMenu">
+  <button onclick="startGame()">Tan ila</button>
+</div>
+
+<div id="end">
+  <h1>GAME OVER!</h1>
+  <p>Your Score:<span id="gameScore">0</span></p>
+  <button onclick="closePage()">Back to Menu</button>
+</div>
+
+</div>
+
+<script src="decoration.js"></script>
+<script src="natural.js"></script>
+<script src="player.js"></script>
+<script src="audio.js"></script>
+<script>
+
+let groundImg = new Image()
+groundImg.src = 'ground.png'
+let backImg = new Image()
+backImg.src = 'background.png'
+
+let imagesToLoad = 0;
+let imagesLoaded = 0;
+let gameReady = false;
+
+const allImages = {
+  thingImg: 'thing.png',
+  hnahImg: 'hnah.png',
+  bgImg: 'background.png',
+  playerImg: 'player.png',
+  lungImg: 'lung.png',
+};
+
+loadAllImages();
+
+function loadAllImages() {
+  imagesToLoad = Object.keys(allImages).length;
+  
+  for (let key in allImages) {
+    let img = new Image();
+    img.src = allImages[key];
+    
+    img.onload = () => {
+      imagesLoaded++;
+      updateLoadingBar();
+      window[key] = img; // global ah save
+    };
+    
+    img.onerror = () => {
+      imagesLoaded++; // Error pawh load ang a ngai
+      updateLoadingBar();
+    }
+  }
+}
+
+function updateLoadingBar() {
+  let percent = Math.floor((imagesLoaded / imagesToLoad) * 100);
+  document.getElementById('loadingBar').style.width = percent + '%';
+  document.getElementById('loadingText').innerText = percent + '%';
+
+  if (imagesLoaded >= imagesToLoad) {
+    // Load zo ta
+    setTimeout(() => {
+      document.getElementById('loadingScreen').style.display = 'none';
+      document.getElementById('mainMenu').style.display = 'flex';
+},500);
+}
+}
+
+function startGame(){
+  document.getElementById('mainMenu').style.display = 'none';
+  document.getElementById('game').style.display = 'block';
+      document.getElementById('scoreTxt').style.display = 'block';
+      scoreCount();
+        startIfReady();
+  startMusic();
+}
+
+function resetGame() {
+  isGameOver = false;
+  obstacle = []; // Rul leh Lung zawng zawng clear
+  score = 0;
+  speed = 4;
+  spawnTimer = 0;
+  player.y = canvas.height - player.h - 20; // Player a hmun ah dah let
+  document.getElementById('score').innerText = '0';
+  
+  // Loop hlui ti tawp
+  if (gameLoopId) cancelAnimationFrame(gameLoopId);
+  if (spawnInterval) clearInterval(spawnInterval);
+}
+
+
+function showGameOver() {
+  stopScore();
+    document.getElementById('scoreTxt').style.display = 'none';
+    
+  const end = document.getElementById('end').style.display = 'flex';
+  let gameScore = document.getElementById('gameScore').innerText = score;
+  
+document.getElementById('game').style.display = 'none';
+}
+
+function closePage(){
+    window.history.back();
+    gOverS.pause();
+    gOverS.currentTime = 0;
+}
+
+
+let ground = {
+  x:0,
+  y:canvas.height - 170,
+  height:200,
+  speed: 3,
+}
+
+let background = {
+  x:0,
+  speed:0.3,
+}
+
+groundImg.onload = startIfReady;
+
+function drawBack() {
+  background.x -= background.speed
+  if(background.x <= -canvas.width){
+    background.x = 0;
+  }
+  ctx.drawImage(backImg,background.x,410,canvas.width,160);
+  ctx.drawImage(backImg,background.x + canvas.width,410,canvas.width,160);
+}
+
+function drawGround() {
+  ground.x -= ground.speed;
+  if(ground.x <= -canvas.width){
+    ground.x = 0;
+  }
+  
+  ctx.drawImage(groundImg,ground.x,ground.y,canvas.width,ground.height)
+  ctx.drawImage(groundImg,ground.x + canvas.width,ground.y,canvas.width,ground.height);
+  ctx.drawImage(groundImg,ground.x - canvas.width,ground.y,canvas.width,ground.height);
+}
+
+function gameLoop() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+  if(isGameOver){
+    jumpSound();
+    showGameOver();
+    return;
+  }
+
+  drawDeco();
+  drawNature();
+  draw();
+  requestAnimationFrame(gameLoop);
+}
+
+// Swipe control
+let startY = 0
+canvas.addEventListener('touchstart', e => {
+  startY = e.touches[0].clientY
+})
+canvas.addEventListener('touchend', e => {
+  let diff = startY - e.changedTouches[0].clientY
+
+  if(diff > 60 && player.onGround) { // Swipe chho = Zuang
+    player.vy = -18
+    player.onGround = false
+    player.state = 'jump'
+    jumpSound();
+  }
+  else if(diff < -60 && player.onGround) { // Swipe thlak = Kun
+    player.state = 'duck'
+    setTimeout(() => {
+      if(player.onGround) player.state = 'run'
+      
+    }, 500)
+  }
+})
+
+window.addEventListener('keydown', (e) => {
+
+  if((e.code === 'space' || e.code === 'ArrowUp' || e.code === 'KeyW') && player.onGround){
+    player.vy = -18
+    player.onGround = false
+    player.state = 'jump'
+  }
+
+  if((e.code === 'ArrowDown' || e.code === 'KeyS') && player.onGround){
+   player.state = 'duck'
+  }
+});
+
+window.addEventListener('keyup', (e) => {
+ if((e.code === 'ArrowDown' || e.code === 'KeyS')){
+   if(player.onGround && player.state === 'duck'){
+    player.state = 'run'
+   }
+  }
+});
+
+gameLoop()
+</script>
+</body>
+</html>
