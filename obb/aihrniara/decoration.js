@@ -1,10 +1,7 @@
 const canvas = document.getElementById('game')
 const ctx = canvas.getContext('2d')
 canvas.width = window.innerWidth
-canvas.height = 715
-
-let clouds = [];
-let cloudTimer = 0;
+canvas.height = window.innerHeight
 
 const sunImg = new Image();
 sunImg.src = 'ni.png';
@@ -48,6 +45,10 @@ function drawBird() {
 }
 
 // Chhum siam
+
+let clouds = [];
+let cloudTimer = 0;
+
 function createCloud() {
   clouds.push({
     x: canvas.width + 100,
@@ -83,6 +84,45 @@ function updateAndDrawClouds() {
     }
   }
 }
+
+let groundImg = new Image()
+groundImg.src = 'ground.png'
+let backImg = new Image()
+backImg.src = 'background.png'
+
+let ground = {
+  x:0,
+  y:canvas.height - 170,
+  height:200,
+  speed: 3,
+}
+
+
+function drawGround() {
+  ground.x -= ground.speed;
+  if(ground.x <= -canvas.width){
+    ground.x = 0;
+  }
+  
+  ctx.drawImage(groundImg,ground.x,ground.y,canvas.width,ground.height)
+  ctx.drawImage(groundImg,ground.x + canvas.width,ground.y,canvas.width,ground.height);
+  ctx.drawImage(groundImg,ground.x - canvas.width,ground.y,canvas.width,ground.height);
+}
+
+let background = {
+  x:0,
+  speed:0.3,
+}
+
+function drawBack() {
+  background.x -= background.speed
+  if(background.x <= -canvas.width){
+    background.x = 0;
+  }
+  ctx.drawImage(backImg,background.x,canvas.height-305,canvas.width,160);
+  ctx.drawImage(backImg,background.x + canvas.width,canvas.height-305,canvas.width,160);
+}
+
 
 function drawDeco(){
   drawSun();
