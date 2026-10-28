@@ -99,15 +99,10 @@ canvas { display: none; background: linear-gradient(to bottom, #8A88F0 0%, #87CE
 </div>
 
 <script src="decoration.js"></script>
-<script src="natural.js"></script>
 <script src="player.js"></script>
+<script src="natural.js"></script>
 <script src="audio.js"></script>
 <script>
-
-let groundImg = new Image()
-groundImg.src = 'ground.png'
-let backImg = new Image()
-backImg.src = 'background.png'
 
 let imagesToLoad = 0;
 let imagesLoaded = 0;
@@ -119,6 +114,7 @@ const allImages = {
   bgImg: 'background.png',
   playerImg: 'player.png',
   lungImg: 'lung.png',
+  rulImg: 'rul.png',
 };
 
 loadAllImages();
@@ -197,41 +193,6 @@ function closePage(){
     gOverS.currentTime = 0;
 }
 
-
-let ground = {
-  x:0,
-  y:canvas.height - 170,
-  height:200,
-  speed: 3,
-}
-
-let background = {
-  x:0,
-  speed:0.3,
-}
-
-groundImg.onload = startIfReady;
-
-function drawBack() {
-  background.x -= background.speed
-  if(background.x <= -canvas.width){
-    background.x = 0;
-  }
-  ctx.drawImage(backImg,background.x,410,canvas.width,160);
-  ctx.drawImage(backImg,background.x + canvas.width,410,canvas.width,160);
-}
-
-function drawGround() {
-  ground.x -= ground.speed;
-  if(ground.x <= -canvas.width){
-    ground.x = 0;
-  }
-  
-  ctx.drawImage(groundImg,ground.x,ground.y,canvas.width,ground.height)
-  ctx.drawImage(groundImg,ground.x + canvas.width,ground.y,canvas.width,ground.height);
-  ctx.drawImage(groundImg,ground.x - canvas.width,ground.y,canvas.width,ground.height);
-}
-
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
   
@@ -243,6 +204,7 @@ function gameLoop() {
 
   drawDeco();
   drawNature();
+  updateAndDrawFloatText();
   draw();
   requestAnimationFrame(gameLoop);
 }
@@ -263,23 +225,28 @@ canvas.addEventListener('touchend', e => {
   }
   else if(diff < -60 && player.onGround) { // Swipe thlak = Kun
     player.state = 'duck'
+    player.isDuck = true
     setTimeout(() => {
-      if(player.onGround) player.state = 'run'
-      
+      if(player.onGround)
+        player.state = 'run'
+        player.isDuck = false
+
     }, 500)
   }
 })
 
 window.addEventListener('keydown', (e) => {
 
-  if((e.code === 'space' || e.code === 'ArrowUp' || e.code === 'KeyW') && player.onGround){
+  if((e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'KeyW') && player.onGround){
     player.vy = -18
     player.onGround = false
     player.state = 'jump'
+    jumpSound();
   }
 
   if((e.code === 'ArrowDown' || e.code === 'KeyS') && player.onGround){
    player.state = 'duck'
+   player.isDuck = true
   }
 });
 
@@ -287,6 +254,7 @@ window.addEventListener('keyup', (e) => {
  if((e.code === 'ArrowDown' || e.code === 'KeyS')){
    if(player.onGround && player.state === 'duck'){
     player.state = 'run'
+    player.isDuck = false
    }
   }
 });
