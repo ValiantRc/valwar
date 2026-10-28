@@ -1,7 +1,6 @@
 let playerImg = new Image()
 playerImg.src = 'player.png'
 
-
 let player = {
   x: 20,
   y: canvas.height - 200,
@@ -10,6 +9,7 @@ let player = {
   vy: 0,
   gravity: 0.6,
   onGround: true,
+  isDuck: false,
   state: 'run',
   frame: 0,
   frameCount: 0,
@@ -33,6 +33,7 @@ function startIfReady(){
   }
 }
 playerImg.onload = startIfReady;
+groundImg.onload = startIfReady;
 
 function draw() {
   // Gravity
