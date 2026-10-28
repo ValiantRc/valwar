@@ -138,8 +138,94 @@ function updateAndDrawLung() {
   }
 }
 
+let rulImg = new Image()
+rulImg.src = 'rul.png'
+
+let rulSpawnTime = 750;
+let rulSpawn = 0;
+let rulObstacle = [];
+let rulSpeed = 3;
+let floatText = []
+
+function createRul(){
+rulObstacle.push({
+x:canvas.width,
+y:canvas.height - 170,
+w:50,
+h:50,
+type:'rul',
+scored: false,
+});
+}
+
+function drawRul(){
+rulSpawn++;
+if(rulSpawn > rulSpawnTime){
+if(Math.random() < 0.4){
+createRul();
+}
+rulSpawn = 0;
+rulSpawnTime = Math.floor(Math.random() * 800) + 300;
+}
+for(let i = rulObstacle.length - 1; i >= 0; i--){
+let obs = rulObstacle[i];
+obs.x -= rulSpeed;
+ctx.drawImage(rulImg, obs.x, obs.y, obs.w, obs.h);
+
+let isColliding = player.x < obs.x + obs.w  &&
+player.x + player.w > obs.x &&
+player.y < obs.y + obs.h &&
+player.y + player.h > obs.y;
+
+if(isColliding){
+ if(player.isDuck && obs.type === 'rul'){
+  if(!obs.scored){
+   score += 10;
+   obs.scored = true;
+   addFloatText(player.x + 20, player.y - 10, "+10");
+   scoreSound();
+  }
+  rulObstacle.splice(i, 1);
+  continue;
+ } else{
+ isGameOver = true;
+ }
+}
+}
+}
+
+function addFloatText(x,y, text){
+floatText.push({
+x:x,
+y:y,
+text:text,
+life:60,
+vy:-2,
+});
+}
+
+function updateAndDrawFloatText(){
+for(let i = floatText.length - 1; i >= 0; i--){
+let f = floatText[i];
+f.y += f.vy;
+f.life--;
+
+ctx.save();
+ctx.globalAlpha = f.life / 60;
+ctx.fillStyle = "#00ff00";
+ctx.font = "bolt 22px Arial";
+ctx.fillText(f.text, f.x, f.y);
+ctx.restore();
+
+if(f.life <= 0){
+floatText.splice(i, 1);
+}
+}
+}
+
 function drawNature(){
   updateAndDrawThingkung();
   drawGround();
+  drawRul();
   updateAndDrawLung();
 }
