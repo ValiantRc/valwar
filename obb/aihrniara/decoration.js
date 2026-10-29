@@ -19,18 +19,13 @@ let birdFrameTimer = 0;
 let birdX = canvas.width;
 let birdY = 0.1;
 let birdTimer = 0;
+let birdScore = false;
 
 function drawBird() {
   birdFrameTimer++;
   if (birdFrameTimer > 10) { // A thla hlap chak dan
     birdFrame = (birdFrame + 1) % 2; // 0,1,0,1
     birdFrameTimer = 0;
-  }
-
-  birdX -= 0.3; // Thlawk kal zel
-  if (birdX < -50) {
-    birdX = canvas.width;
-    birdY = Math.random() * 150 + 50;
   }
 
   // Sprite sheet a tang a cut
@@ -42,8 +37,29 @@ function drawBird() {
     birdFrame * frameWidth, 0, frameWidth, birdSheet.height, // cut
     birdX, birdY, 50, 40 // draw
   );
-}
+   let isBirdColliding = player.x < birdX + 50 &&
+                         player.x + player.w > birdX &&
+                         player.y < birdY + 40 &&
+                         player.y + player.h > birdY;
 
+  if(isBirdColliding){
+              score += 20;
+              birdScore = true;
+              addFloatText(player.x + 20, player.y - 10, "+20");
+              scoreSound();
+              
+              birdX = canvas.width + Math.random() * 500;
+              birdY = Math.random() * 350 + 20;
+              birdScore = false;
+              return;
+      }
+  birdX -= 0.3; // Thlawk kal zel
+  if (birdX < -50) {
+    birdX = canvas.width;
+    birdY = Math.random() * 350 + 20;
+    birdScore = false;
+  }
+}
 // Chhum siam
 
 let clouds = [];
