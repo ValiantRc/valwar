@@ -223,9 +223,114 @@ floatText.splice(i, 1);
 }
 }
 
+const sakhiImg = new Image()
+sakhiImg.src = 'sakhi.png';
+
+let sakhiFrame = 0;
+let sakhiFrameTimer = 0;
+let sakhiX = canvas.width +1500 + Math.random() * 2000;
+let sakhiY = canvas.height - 185;
+let sakhiScored = false;
+
+const heightOffset = [0, -10, -45, 0];
+
+function drawSakhi() {
+  
+  if(!sakhiImg.complete || sakhiImg.naturalWidth === 0) return;
+  
+  sakhiFrameTimer++;
+  if (sakhiFrameTimer > 10) {
+    sakhiFrame = (sakhiFrame + 1) % 4;
+    sakhiFrameTimer = 0;
+  }
+  
+let fw = sakhiImg.width / 4;
+let y = sakhiY + heightOffset[sakhiFrame];
+
+ctx.drawImage(sakhiImg, sakhiFrame * fw, 0, fw, sakhiImg.height, sakhiX, y, 80, 50);
+
+  let isSakhiColliding = player.x < sakhiX + 80 &&
+                         player.x + player.w > sakhiX &&
+                         player.y < y + 50 &&
+                         player.y + player.h > y;
+
+  if(isSakhiColliding){
+      // RUL ang chiah kha
+      if(player.isDuck){ // Bawk chuan
+          if(!sakhiScored){
+              score += 5;
+              sakhiScored = true;
+              addFloatText(player.x + 20, player.y - 10, "+5");
+              scoreSound();
+          }
+          // A sut zawh ah ti bo nghal, a rawn chhuak leh random ang
+          sakhiX = canvas.width + 800 + Math.random() * 1000;
+          sakhiScored = false;
+          return;
+      }
+    }sakhiX -= 1.5;
+  }  if(sakhiX < -50){
+    sakhiX = canvas.width + Math.random();
+    sakhiScored = false;
+}
+
+/* sial chin */
+
+const sialImg = new Image()
+sialImg.src = 'sial.png';
+
+let sialFrame = 0;
+let sialFrameTimer = 0;
+let sialX = canvas.width +1500 + Math.random() * 2000;
+let sialY = canvas.height - 185;
+let sialScored = false;
+
+
+function drawSial() {
+  
+  if(!sialImg.complete || sialImg.naturalWidth === 0) return;
+  
+  sialFrameTimer++;
+  if (sialFrameTimer > 10) {
+    sialFrame = (sialFrame + 1) % 4;
+    sialFrameTimer = 0;
+  }
+  
+let fw = sialImg.width / 4;
+let y = sialY;
+
+ctx.drawImage(sialImg, sialFrame * fw, 0, fw, sialImg.height, sialX, y, 90, 55);
+
+  let isSialColliding = player.x < sialX + 90 &&
+                         player.x + player.w > sialX &&
+                         player.y < y + 55 &&
+                         player.y + player.h > y;
+
+  if(isSialColliding){
+      // RUL ang chiah kha
+      if(player.isDuck){ // Bawk chuan
+          if(!sialScored){
+              score += 5;
+              sialScored = true;
+              addFloatText(player.x + 20, player.y - 10, "+5");
+              scoreSound();
+          }
+          // A sut zawh ah ti bo nghal, a rawn chhuak leh random ang
+          sialX = canvas.width + 800 + Math.random() * 1000;
+          sialScored = false;
+          return;
+      }
+    }sialX -= 2;
+  }  if(sialX < -50){
+    sialX = canvas.width + Math.random();
+    sialScored = false;
+}
+
 function drawNature(){
   updateAndDrawThingkung();
   drawGround();
+  drawSakhi();
+  drawSial();
   drawRul();
   updateAndDrawLung();
 }
