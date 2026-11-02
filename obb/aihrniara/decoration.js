@@ -5,6 +5,8 @@ canvas.height = window.innerHeight
 
 const sunImg = new Image();
 sunImg.src = 'ni.png';
+const thlamImg = new Image();
+thlamImg.src = 'thlam.png';
 
 function drawSun() {
   // Chung lam ding lam ah
@@ -46,7 +48,7 @@ function drawBird() {
               score += 20;
               birdScore = true;
               addFloatText(player.x + 20, player.y - 10, "+20");
-              scoreSound();
+              attackTimer = 18;
               
               birdX = canvas.width + Math.random() * 500;
               birdY = Math.random() * 350 + 20;
@@ -139,10 +141,39 @@ function drawBack() {
   ctx.drawImage(backImg,background.x + canvas.width,canvas.height-305,canvas.width,160);
 }
 
+ let thlamsp = 0;
+ let thlamspt = 0;
+ let thlamobs = [];
+
+function createThlam(){
+thlamobs.push({
+x:canvas.width,
+y:canvas.height - 230,
+w:100,
+h:100,
+});
+}
+
+function drawThlam() {
+  thlamsp++;
+  if (thlamsp > thlamspt) { // A thla hlap chak dan
+    if(Math.random() < 0.4){
+      createThlam();
+      }
+     thlamsp = 0;
+     thlamspt = Math.floor(Math.random() * 800) + 300;
+}
+  for(let i = thlamobs.length - 1; i >= 0; i--){
+let obs = thlamobs[i];
+obs.x -= 3;
+ ctx.drawImage(thlamImg, obs.x, obs.y, obs.w, obs.h);
+}
+}
 
 function drawDeco(){
   drawSun();
   updateAndDrawClouds();
   drawBack();
+  drawThlam();
   drawBird();
 }
