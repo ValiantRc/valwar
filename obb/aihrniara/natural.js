@@ -127,6 +127,10 @@ function updateAndDrawLung() {
     obs.x -= speed;
     ctx.drawImage(lungImg, obs.x, obs.y, obs.w, obs.h);
 
+	if(player.isBlink){
+	 isGameOver = false;
+	}
+
     if (
       player.x < obs.x + obs.w - 10 &&
       player.x + player.w - 10 > obs.x &&
@@ -183,7 +187,7 @@ if(isColliding){
    score += 10;
    obs.scored = true;
    addFloatText(player.x + 20, player.y - 10, "+10");
-   scoreSound();
+   attackTimer = 18;
   }
   rulObstacle.splice(i, 1);
   continue;
@@ -261,7 +265,7 @@ ctx.drawImage(sakhiImg, sakhiFrame * fw, 0, fw, sakhiImg.height, sakhiX, y, 80, 
               score += 5;
               sakhiScored = true;
               addFloatText(player.x + 20, player.y - 10, "+5");
-              scoreSound();
+              attackTimer = 18;
           }
           // A sut zawh ah ti bo nghal, a rawn chhuak leh random ang
           sakhiX = canvas.width + 800 + Math.random() * 1000;
@@ -313,7 +317,7 @@ ctx.drawImage(sialImg, sialFrame * fw, 0, fw, sialImg.height, sialX, y, 90, 55);
               score += 5;
               sialScored = true;
               addFloatText(player.x + 20, player.y - 10, "+5");
-              scoreSound();
+              attackTimer = 18;
           }
           // A sut zawh ah ti bo nghal, a rawn chhuak leh random ang
           sialX = canvas.width + 800 + Math.random() * 1000;
