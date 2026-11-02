@@ -1,12 +1,17 @@
 const jumpS = new Audio()
 jumpS.src = 'jump.mp3'
 jumpS.loop = false;
-jumpS.volume = 1;
+jumpS.volume = 0.8;
 
-const scoreS = new Audio()
-scoreS.src = 'score.mp3'
-scoreS.loop = false;
-scoreS.volume = 0.9;
+const slashS = new Audio()
+slashS.src = 'slash.mp3'
+slashS.loop = false;
+slashS.volume = 0.7;
+
+const blinkS = new Audio()
+blinkS.src = 'blink.mp3'
+blinkS.loop = false;
+blinkS.volume = 0.7;
 
 const bgMusic = new Audio()
 bgMusic.src = 'bgmusic.mp3'
@@ -34,9 +39,14 @@ jumpS.currentTime = 0;
 jumpS.play().catch(e =>{});
 }
 
-function scoreSound(){
-scoreS.currentTime = 0;
-scoreS.play().catch(e =>{});
+function slashSound(){
+slashS.currentTime = 0;
+slashS.play().catch(e =>{});
+}
+
+function blinkSound(){
+blinkS.currentTime = 0;
+blinkS.play().catch(e =>{});
 }
 
 function gOverSound(){
