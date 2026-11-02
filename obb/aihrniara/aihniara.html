@@ -109,14 +109,20 @@ let imagesLoaded = 0;
 let gameReady = false;
 
 const allImages = {
+  sunImg: 'ni.png',
+  birdSheet: 'sava.png',
   thingImg: 'thing.png',
   hnahImg: 'hnah.png',
   bgImg: 'background.png',
   playerImg: 'player.png',
+  rollImg: 'roll.png',
+  blinkImg: 'blink.png',
+  slashImg: 'slash.png',
   lungImg: 'lung.png',
   rulImg: 'rul.png',
-  sakhiImg: 'sakhi.png',
   sialImg: 'sial.png',
+  sakhiImg: 'sakhi.png',
+  thlamImg: 'thlam.png',
 };
 
 loadAllImages();
@@ -197,6 +203,7 @@ function closePage(){
 
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    updateSlash();
   
   if(isGameOver){
     gOverSound();
@@ -208,6 +215,7 @@ function gameLoop() {
   drawNature();
   updateAndDrawFloatText();
   draw();
+  drawSlash(ctx);
   requestAnimationFrame(gameLoop);
 }
 
@@ -219,47 +227,120 @@ canvas.addEventListener('touchstart', e => {
 canvas.addEventListener('touchend', e => {
   let diff = startY - e.changedTouches[0].clientY
 
-  if(diff > 60 && player.onGround) { // Swipe chho = Zuang
+  if(diff > 60 && player.jumpCount < player.maxJump && !player.isBlink) { // Swipe chho = Zuang
     player.vy = -18
     player.onGround = false
+    player.jumpCount++
+    if(player.jumpCount == 2){
+	player.state = 'doublejump'
+   }else{
     player.state = 'jump'
     jumpSound();
+    }
   }
-  else if(diff < -60 && player.onGround) { // Swipe thlak = Kun
+else if(diff < - 60 && player.isBlink){
+player.state = 'role'
+player.onGround = true
+}
+  else if(diff < -60 && player.onGround) { 
+   if(player.isDuck){
+	player.state = 'blink'
+	player.isBlink = true
+	player.isDuck = true
+	player.frame = 0
+	player.frameCount = 0
+
+	let originalX  = player.x
+	let blinkDistance = 100
+
+	player.x = blinkDistance
+	blinkSound();
+
+	let returnTimer = setInterval(() => {
+	  player.x -= 15;
+	  if(player.x <= originalX){
+	  player.x = originalX;
+	  clearInterval(returnTimer);
+	  player.isBlink = false;
+	  player.state = 'run';
+	}
+    }, 200);
+  }
+ else{   
     player.state = 'duck'
     player.isDuck = true
+    player.frame = 0
+    player.frameCount = 0
     setTimeout(() => {
+     if(player.isDuck){
       if(player.onGround)
+	player.vy = 0
         player.state = 'run'
         player.isDuck = false
-
-    }, 500)
+	}
+    }, 500);
   }
-})
+}
+});
 
 window.addEventListener('keydown', (e) => {
 
-  if((e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'KeyW') && player.onGround){
+  if((e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'KeyW') && player.jumpCount < player.maxJump && !player.isBlink){
     player.vy = -18
     player.onGround = false
+    player.jumpCount++
+    if(player.jumpCount == 2){
+	player.state = 'doublejump'
+   }else{
     player.state = 'jump'
+    }
     jumpSound();
   }
+  else if((e.code === 'ArrowDown' || e.code === 'KeyS') && player.isBlink){
+   player.state = 'role'
+   player.onGround = true
+  }
 
-  if((e.code === 'ArrowDown' || e.code === 'KeyS') && player.onGround){
-   player.state = 'duck'
+  else if((e.code === 'ArrowDown' || e.code === 'KeyS') && player.onGround){
+   if(player.isDuck){
+   player.state = 'blink'
+   player.isBlink = true
    player.isDuck = true
-  }
-});
+   player.frame = 0
+	player.frameCount = 0
 
-window.addEventListener('keyup', (e) => {
- if((e.code === 'ArrowDown' || e.code === 'KeyS')){
-   if(player.onGround && player.state === 'duck'){
-    player.state = 'run'
-    player.isDuck = false
-   }
+	let originalX  = player.x
+	let blinkDistance = 100
+
+	player.x = blinkDistance
+	blinkSound();
+
+	let returnTimer = setInterval(() => {
+	  player.x -= 15;
+	  if(player.x <= originalX){
+	  player.x = originalX;
+	  clearInterval(returnTimer);
+	  player.isBlink = false;
+	  player.state = 'run';
+	}
+    }, 200);
   }
-});
+ else{   
+    player.state = 'duck'
+    player.isDuck = true
+    player.frame = 0
+    player.frameCount = 0
+    setTimeout(() => {
+     if(player.isDuck){
+      if(player.onGround)
+	player.vy = 0
+        player.state = 'run'
+        player.isDuck = false
+	}
+    }, 500);
+  }
+}
+})
 
 gameLoop()
 </script>
