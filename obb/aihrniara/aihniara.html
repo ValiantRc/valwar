@@ -9,7 +9,7 @@
 <style>
 body { margin: 0; overflow: hidden;
 background: #000; touch-action: none; }
-canvas { display: none; background: linear-gradient(to bottom, #8A88F0 0%, #87CEEB 65%,#789F84 0%); 
+canvas { display: none; background: linear-gradient(to bottom, #8A88F0 0%, #87CEEB 65%,#87ceeb 0%); 
 }
 #mainMenu{
   position: absolute;
@@ -20,7 +20,9 @@ canvas { display: none; background: linear-gradient(to bottom, #8A88F0 0%, #87CE
   flex-direction:column;
   height:100dvh;
   width:100dvw;
-  background:#87ceeb;
+  background: url('menu.png');
+ background-repeat:no-repeat;
+ background-size:cover;
   justify-content:center;
   align-items:center;
 }
@@ -68,33 +70,57 @@ canvas { display: none; background: linear-gradient(to bottom, #8A88F0 0%, #87CE
 }
 #end button:active{transform:translate(3px,3px);box-shadow:3px 3px 0 #000}
 
+#okScreen{
+display:flex;
+width:100dvw;
+height:100dvh;
+background:#87ceeb;
+color:white;
+align-items:center;
+justify-content:center;
+}
+
+
 </style>
 </head>
 <body>
- <div id="gameContainer">
-  <div id="loadingScreen" style="position:absolute; width:100%; height:100%; background:#87CEEB; display:flex; flex-direction:column; justify-content:center; align-items:center; z-index:10;">
-   <h2 style="color:white; font-family:Arial;">LOADING...</h2>
+<div id="gameContainer">
+
+<div id="okScreen" onclick="okScreen()"><img src="menu.png" style="height:80px;width:80px;border:2px solid silver;border-radius:9px;"></div>
+
+ <div id="loadingScreen" style="position:absolute; width:100%; height:100%; background:#87CEEB; display:none; flex-direction:column; justify-content:center; align-items:center; z-index:10;">
+  <h2 style="color:white; font-family:Arial;">LOADING...</h2>
   <div style="width:200px; height:20px; background:white; border-radius:10px; overflow:hidden;">
    <div id="loadingBar" style="width:0%; height:100%; background:green; transition:0.2s;"></div>
   </div>
- <p id="loadingText" style="color:white;">0%</p>
+  <p id="loadingText" style="color:white;">0%</p>
  </div>
 
-<canvas id="game" style="display:none;"></canvas>
-
-<div id="scoreTxt">
-  Score:<span id="score" onclick="resetGame()">0</span>
+<div id="loadingNa" style="position:absolute; width:100%; height:100%; background:#87ceeb; display:none; flex-decoration:column; justify-content:center; align-items:center; z-index:10;">
+  <h2 style="color:white; font-family:Arial">LOADING...</h2>
+   <div style="width:200px; height:20px; background:white; border-radius:10px; overflow:hidden;">
+      <div id="loading" style="width:0%; height:100%; background:green; transition:0.2s;">
+      </div>
+   </div>
+  <p id="loadText" style="color:white;">0%</p>
 </div>
 
-<div id="mainMenu">
-  <button onclick="startGame()">Tan ila</button>
+ <canvas id="game" style="display:none;"></canvas>
+
+ <div id="scoreTxt">
+  Score:<span id="score">0</span>
+ </div>
+
+ <div id="mainMenu" class="show">
+  <button onclick="startGame()">Play</button>
+  <button onclik="back()">Exit</button>
 </div>
 
-<div id="end">
+ <div id="end">
   <h1>GAME OVER!</h1>
   <p>Your Score:<span id="gameScore">0</span></p>
   <button onclick="closePage()">Back to Menu</button>
-</div>
+ </div>
 
 </div>
 
@@ -104,8 +130,24 @@ canvas { display: none; background: linear-gradient(to bottom, #8A88F0 0%, #87CE
 <script src="audio.js"></script>
 <script>
 
-let imagesToLoad = 0;
-let imagesLoaded = 0;
+
+function okScreen(){
+  document.getElementById("okScreen").style.display = "none";
+  loadAllAssets();
+  document.getElementById("loadingNa").style.display = "flex";
+
+let gameDiv = document.getElementById('gameContainer');
+if(gameDiv.requestFullscreen){
+gameDiv.requestFullscreen().catch(()=>{});
+}else if(gameDiv.webkitRequestFullscreen){
+gameDiv.webkitRequestFullscreen();
+}
+}
+
+let allToLoad = 0;
+let allLoaded = 0;
+let allLoad = false;
+
 let gameReady = false;
 
 const allImages = {
@@ -125,37 +167,58 @@ const allImages = {
   thlamImg: 'thlam.png',
 };
 
-loadAllImages();
+let images = {};
 
-function loadAllImages() {
-  imagesToLoad = Object.keys(allImages).length;
+const allAudios = {
+  jumpS: "jump.mp3",
+slashS: "slash.mp3",
+blinkS: "blink.mp3",
+bgMusic: "bgmusic.mp3",
+gOverS: "dead.mp3",
+};
+
+function loadAllAssets() {
+  allToLoad = Object.keys(allAudios).length + Object.keys(allImages).length;
+
+  for(let key in allImages){
+let img = new Image();
+img.src = allImages[key];
+img.onload = () =>{
+images[key] = img;
+onLoaded();
+};
+img.onerror = () => onLoaded();
+}
   
-  for (let key in allImages) {
-    let img = new Image();
-    img.src = allImages[key];
+  for (let key in allAudios) {
+    let aud = new Audio();
+    aud.src = allAudios[key];
+    aud.preload = "auto";
     
-    img.onload = () => {
-      imagesLoaded++;
-      updateLoadingBar();
-      window[key] = img; // global ah save
-    };
-    
-    img.onerror = () => {
-      imagesLoaded++; // Error pawh load ang a ngai
-      updateLoadingBar();
+    let counted = false;
+	function done(){
+	if(counted)return;
+	counted = true;
+	window[key] = aud;
+	onLoaded();
     }
+	aud.oncanplaythrough = done;
+	aud.onerror = done;
   }
 }
 
-function updateLoadingBar() {
-  let percent = Math.floor((imagesLoaded / imagesToLoad) * 100);
-  document.getElementById('loadingBar').style.width = percent + '%';
-  document.getElementById('loadingText').innerText = percent + '%';
+function onLoaded() {
+  allLoaded++;
+ let percent = Math.floor((allLoaded / allToLoad) * 100);
+ if(percent > 100) percent = 100;
 
-  if (imagesLoaded >= imagesToLoad) {
-    // Load zo ta
+  document.getElementById('loading').style.width = percent + '%';
+  document.getElementById('loadText').innerText = percent + '%';
+
+  if (allLoaded >= allToLoad) {
+    allLoad = true;
     setTimeout(() => {
-      document.getElementById('loadingScreen').style.display = 'none';
+      document.getElementById('loadingNa').style.display = 'none';
       document.getElementById('mainMenu').style.display = 'flex';
 },500);
 }
@@ -163,30 +226,27 @@ function updateLoadingBar() {
 
 function startGame(){
   document.getElementById('mainMenu').style.display = 'none';
-  document.getElementById('game').style.display = 'block';
-      document.getElementById('scoreTxt').style.display = 'block';
+  document.getElementById('game').style.display = 'flex';
+ document.getElementById('scoreTxt').style.display = 'flex';
+  
       scoreCount();
         startIfReady();
   startMusic();
+  gameReady = true;
+ isGameOver = false;
+}
+
+function back(){
+window.history.back();
 }
 
 function resetGame() {
-  isGameOver = false;
-  obstacle = []; // Rul leh Lung zawng zawng clear
-  score = 0;
-  speed = 4;
-  spawnTimer = 0;
-  player.y = canvas.height - player.h - 20; // Player a hmun ah dah let
-  document.getElementById('score').innerText = '0';
-  
-  // Loop hlui ti tawp
-  if (gameLoopId) cancelAnimationFrame(gameLoopId);
-  if (spawnInterval) clearInterval(spawnInterval);
+ location.reload();
 }
-
 
 function showGameOver() {
   stopScore();
+  isGameOver = true;
     document.getElementById('scoreTxt').style.display = 'none';
     
   const end = document.getElementById('end').style.display = 'flex';
@@ -196,7 +256,9 @@ document.getElementById('game').style.display = 'none';
 }
 
 function closePage(){
-    window.history.back();
+      document.getElementById('end').style.display = 'none';
+      document.getElementById('mainMenu').style.display = 'flex';
+      resetGame();
     gOverS.pause();
     gOverS.currentTime = 0;
 }
@@ -204,19 +266,25 @@ function closePage(){
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     updateSlash();
-  
+ 
+
   if(isGameOver){
     gOverSound();
     showGameOver();
     return;
   }
 
+  if(!gameReady){
+requestAnimationFrame(gameLoop);
+return;
+}
+
   drawDeco();
   drawNature();
   updateAndDrawFloatText();
   draw();
   drawSlash(ctx);
-  requestAnimationFrame(gameLoop);
+ requestAnimationFrame(gameLoop);
 }
 
 // Swipe control
@@ -227,7 +295,7 @@ canvas.addEventListener('touchstart', e => {
 canvas.addEventListener('touchend', e => {
   let diff = startY - e.changedTouches[0].clientY
 
-  if(diff > 60 && player.jumpCount < player.maxJump && !player.isBlink) { // Swipe chho = Zuang
+  if(diff > 25 && player.jumpCount < player.maxJump && !player.isBlink) { // Swipe chho = Zuang
     player.vy = -18
     player.onGround = false
     player.jumpCount++
@@ -238,11 +306,11 @@ canvas.addEventListener('touchend', e => {
     jumpSound();
     }
   }
-else if(diff < - 60 && player.isBlink){
+else if(diff < - 25 && player.isBlink){
 player.state = 'role'
 player.onGround = true
 }
-  else if(diff < -60 && player.onGround) { 
+  else if(diff < -25 && player.onGround) { 
    if(player.isDuck){
 	player.state = 'blink'
 	player.isBlink = true
