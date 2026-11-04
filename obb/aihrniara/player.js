@@ -32,11 +32,9 @@ function startIfReady(){
     spriteW = playerImg.width / spriteCols;
     spriteH = playerImg.height / spriteRows;
     player.y = canvas.height - 200;
-    gameLoop();
   }
 }
-playerImg.onload = startIfReady;
-groundImg.onload = startIfReady;
+playerImg.onload = startIfReady();
 
 let spriteCols = 5
 let spriteRows = 3
@@ -111,7 +109,7 @@ function draw() {
   else if(player.state === 'duck') {
     row = 2
     player.frameCount++
-    if(player.frameCount > 7) {
+    if(player.frameCount > 3.5) {
       player.frame = (player.frame + 1) % maxFrame
       player.frameCount = 0
     }
@@ -119,7 +117,7 @@ function draw() {
   else {
     row = 0
     player.frameCount++
-    if(player.frameCount > 6) {
+    if(player.frameCount > 3) {
       player.frame = (player.frame + 1) % maxFrame
       player.frameCount = 0
       spriteW = playerImg.width / 5;
