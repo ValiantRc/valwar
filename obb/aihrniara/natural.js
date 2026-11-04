@@ -1,12 +1,9 @@
-let gameLoopId = null; // A chung ber ah, let dang te bul ah
-let spawnInterval = null;
-
 let isGameOver = false;
 let obstacle = [];
 let  spawnTimer = 0;
 let score = 0;
 let  nextSpawnTime = 300;
-let  speed = 3;
+let  speed = 6;
 
 let scoreN = document.getElementById('score');
 let scoreInterval = null;
@@ -148,7 +145,7 @@ rulImg.src = 'rul.png'
 let rulSpawnTime = 750;
 let rulSpawn = 0;
 let rulObstacle = [];
-let rulSpeed = 3;
+let rulSpeed = 6;
 let floatText = []
 
 function createRul(){
