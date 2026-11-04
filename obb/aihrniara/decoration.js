@@ -55,7 +55,7 @@ function drawBird() {
               birdScore = false;
               return;
       }
-  birdX -= 0.3; // Thlawk kal zel
+  birdX -= 0.6; // Thlawk kal zel
   if (birdX < -50) {
     birdX = canvas.width;
     birdY = Math.random() * 350 + 20;
@@ -112,7 +112,7 @@ let ground = {
   x:0,
   y:canvas.height - 170,
   height:200,
-  speed: 3,
+  speed: 6,
 }
 
 
@@ -129,7 +129,7 @@ function drawGround() {
 
 let background = {
   x:0,
-  speed:0.3,
+  speed:0.5,
 }
 
 function drawBack() {
@@ -165,7 +165,7 @@ function drawThlam() {
 }
   for(let i = thlamobs.length - 1; i >= 0; i--){
 let obs = thlamobs[i];
-obs.x -= 3;
+obs.x -= speed;
  ctx.drawImage(thlamImg, obs.x, obs.y, obs.w, obs.h);
 }
 }
