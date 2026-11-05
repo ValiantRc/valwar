@@ -269,11 +269,12 @@ ctx.drawImage(sakhiImg, sakhiFrame * fw, 0, fw, sakhiImg.height, sakhiX, y, 80, 
           sakhiScored = false;
           return;
       }
-    }sakhiX -= 1.5;
-  }  if(sakhiX < -50){
+    }sakhiX -= speed - 4.5;
+    if(sakhiX < -50){
     sakhiX = canvas.width + Math.random();
     sakhiScored = false;
 }
+  }
 
 /* sial chin */
 
@@ -321,10 +322,11 @@ ctx.drawImage(sialImg, sialFrame * fw, 0, fw, sialImg.height, sialX, y, 90, 55);
           sialScored = false;
           return;
       }
-    }sialX -= 2;
-  }  if(sialX < -50){
+    }sialX -= speed - 4;
+    if(sialX < -50){
     sialX = canvas.width + Math.random();
     sialScored = false;
+  }
 }
 
 function drawNature(){
