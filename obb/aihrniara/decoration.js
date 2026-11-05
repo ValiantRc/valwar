@@ -177,6 +177,7 @@ let muFrameTimer = 0;
 let muX = canvas.width +800 + Math.random() * 8500;
 let muY = Math.random() * 350 + 20;
 let muScored = false;
+let muWasOff = true;
 
 function drawMu() {
   muFrameTimer++;
@@ -188,6 +189,14 @@ function drawMu() {
 let fw = muImg.width / 4;
 let y = muY;
 
+if(muX <= canvas.width - 10 && muWasOff){
+  muSound();
+  muWasOff = false;
+}
+if(muX > canvas.width){
+  muWasOff = true;
+}
+  
 ctx.drawImage(muImg, muFrame * fw, 0, fw, muImg.height, muX, y, 70, 40);
 
   let isMuColliding = player.x < muX + 70 &&
