@@ -80,6 +80,36 @@ align-items:center;
 justify-content:center;
 }
 
+#overlay{
+height:100%;
+width:100%;
+display:none;
+z-index:999;
+position:fixed;
+}
+#help{
+padding:16px;
+color:#fff;
+display:none;
+position:fixed;
+align-items:center;
+left:15%;
+top:15%;
+height:70%;
+width:70%;
+background:linear-gradient(to left, #000 10%, #e3e033 5%, #ff0000 8%);
+z-index:999;
+border:1px solid #e3e033;
+border-radius:9px;
+}
+#help button{
+  padding:15px;
+  margin:8px;
+   width:220px;
+  background:#ffeb3b;border:4px solid #000;
+  font-size:18px;font-weight:bold;
+  box-shadow:6px 6px 0 #000;
+  cursor:pointer;
 
 </style>
 </head>
@@ -111,9 +141,24 @@ justify-content:center;
   Score:<span id="score">0</span>
  </div>
 
+<div id="overlay"></div>
+<div id="help">
+<button onclick="hideHelp()">Back</button>
+<h3>Control</h3><br>
+<p>Jump: Sweap up<br>
+Duck: Sweap down<br>
+Double Jump: jump + Sweap up<br>
+Blink: Double JUmp + Sweap down<br>
+<br>
+<p><b>Rock</b>&<b>Tree leaft</b> can stop runing.<br>
+<b>Snake</b> may kill player.<br>
+<b>Duck + Slash</b> can use near <b>Snake, deer, bull<b>.<br>
+<b>Jump + Slash</b> can used near <b>Bird, Crested serpent eagle</b>
+</div>
  <div id="mainMenu" class="show">
   <button onclick="startGame()">Play</button>
-  <button onclik="back()">Exit</button>
+  <button onclick="helpC()">Help</button>
+  <button onclick="back()">Exit</button>
 </div>
 
  <div id="end">
@@ -222,6 +267,21 @@ function onLoaded() {
       document.getElementById('mainMenu').style.display = 'flex';
 },500);
 }
+}
+
+const help = document.getElementById('help');
+const overlay = document.getElementById('overlay');
+function helpC(){
+overlay.style.display = 'block';
+help.style.display = 'block';
+}
+overlay.onclick = function(){
+help.style.display = 'none';
+overlay.style.display = 'none';
+}
+function hideHelp(){
+help.style.display = 'none';
+overlay.style.display = 'none';
 }
 
 function startGame(){
