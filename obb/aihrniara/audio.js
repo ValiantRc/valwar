@@ -3,6 +3,11 @@ jumpS.src = 'jump.mp3'
 jumpS.loop = false;
 jumpS.volume = 0.8;
 
+const muS = new Audio()
+muS.src = 'mu.mp3'
+muS.loop = false;
+muS.volume = 0.8;
+
 const slashS = new Audio()
 slashS.src = 'slash.mp3'
 slashS.loop = false;
@@ -37,6 +42,12 @@ function startMusic(){
 function jumpSound(){
 jumpS.currentTime = 0;
 jumpS.play().catch(e =>{});
+}
+
+
+function muSound(){
+muS.currentTime = 0;
+muS.play().catch(e =>{});
 }
 
 function slashSound(){
