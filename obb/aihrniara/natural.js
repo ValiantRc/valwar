@@ -324,7 +324,7 @@ ctx.drawImage(sialImg, sialFrame * fw, 0, fw, sialImg.height, sialX, y, 90, 55);
       }
     }sialX -= speed - 4;
     if(sialX < -50){
-    sialX = canvas.width + 800 Math.random() * 900;
+    sialX = canvas.width + 800 + Math.random() * 900;
     sialScored = false;
   }
 }
