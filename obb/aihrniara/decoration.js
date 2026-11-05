@@ -37,11 +37,11 @@ function drawBird() {
   ctx.drawImage(
     birdSheet,
     birdFrame * frameWidth, 0, frameWidth, birdSheet.height, // cut
-    birdX, birdY, 50, 40 // draw
+    birdX, birdY, 35, 25 // draw
   );
-   let isBirdColliding = player.x < birdX + 50 &&
+   let isBirdColliding = player.x < birdX + 35 &&
                          player.x + player.w > birdX &&
-                         player.y < birdY + 40 &&
+                         player.y < birdY + 25 &&
                          player.y + player.h > birdY;
 
   if(isBirdColliding){
@@ -169,6 +169,51 @@ obs.x -= speed;
  ctx.drawImage(thlamImg, obs.x, obs.y, obs.w, obs.h);
 }
 }
+const muImg = new Image()
+muImg.src = 'mu.png'
+
+let muFrame = 0;
+let muFrameTimer = 0;
+let muX = canvas.width +800 + Math.random() * 8500;
+let muY = Math.random() * 350 + 20;
+let muScored = false;
+
+function drawMu() {
+  muFrameTimer++;
+  if (muFrameTimer > 10) {
+    muFrame = (muFrame + 1) % 4;
+    muFrameTimer = 0;
+  }
+  
+let fw = muImg.width / 4;
+let y = muY;
+
+ctx.drawImage(muImg, muFrame * fw, 0, fw, muImg.height, muX, y, 70, 40);
+
+  let isMuColliding = player.x < muX + 70 &&
+                         player.x + player.w > muX &&
+                         player.y < y + 40 &&
+                         player.y + player.h > y;
+
+  if(isMuColliding){
+        
+              score += 30;
+              muScored = true;
+              addFloatText(player.x + 20, player.y - 10, "+30");
+              attackTimer = 10;
+          
+       
+          muX = canvas.width + 800 + Math.random() * 8500;
+          muY = Math.random() * 350 + 20;
+          muScored = false;
+          return;
+      }muX -= speed + 1;
+    if(muX < -50){
+    muX = canvas.width +800 + Math.random() * 8500;
+    muY = Math.random() * 350 + 20;
+    muScored = false;
+  }
+}
 
 function drawDeco(){
   drawSun();
@@ -176,4 +221,5 @@ function drawDeco(){
   drawBack();
   drawThlam();
   drawBird();
+  drawMu();
 }
