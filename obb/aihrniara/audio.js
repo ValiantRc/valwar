@@ -6,7 +6,7 @@ jumpS.volume = 0.8;
 const muS = new Audio()
 muS.src = 'mu.mp3'
 muS.loop = false;
-muS.volume = 0.8;
+muS.volume = 0.6;
 
 const slashS = new Audio()
 slashS.src = 'slash.mp3'
