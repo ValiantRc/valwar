@@ -229,7 +229,7 @@ sakhiImg.src = 'sakhi.png';
 
 let sakhiFrame = 0;
 let sakhiFrameTimer = 0;
-let sakhiX = canvas.width +1500 + Math.random() * 2000;
+let sakhiX = canvas.width +800 + Math.random() * 1000;
 let sakhiY = canvas.height - 185;
 let sakhiScored = false;
 
@@ -271,7 +271,7 @@ ctx.drawImage(sakhiImg, sakhiFrame * fw, 0, fw, sakhiImg.height, sakhiX, y, 80, 
       }
     }sakhiX -= speed - 4.5;
     if(sakhiX < -50){
-    sakhiX = canvas.width + Math.random();
+    sakhiX = canvas.width +800 + Math.random() * 1000;
     sakhiScored = false;
 }
   }
@@ -324,7 +324,7 @@ ctx.drawImage(sialImg, sialFrame * fw, 0, fw, sialImg.height, sialX, y, 90, 55);
       }
     }sialX -= speed - 4;
     if(sialX < -50){
-    sialX = canvas.width + Math.random();
+    sialX = canvas.width + 800 Math.random() * 900;
     sialScored = false;
   }
 }
