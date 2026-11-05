@@ -209,7 +209,7 @@ ctx.drawImage(muImg, muFrame * fw, 0, fw, muImg.height, muX, y, 70, 40);
               score += 30;
               muScored = true;
               addFloatText(player.x + 20, player.y - 10, "+30");
-              attackTimer = 10;
+              attackTimer = 18;
           
        
           muX = canvas.width + 800 + Math.random() * 8500;
