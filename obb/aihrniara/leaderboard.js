@@ -21,7 +21,7 @@ const firebaseConfig = {
   }
   function getSeasonKey(){
     let vawiin = new Date();
-    return vawiin.getMonth() + "-" + vawiin.getFullYear();
+    return (vawiin.getMonth()+1) + "-" + vawiin.getFullYear();
   }
 
   function checkNewSeason(){
@@ -50,13 +50,11 @@ const firebaseConfig = {
     if(hming === ""){ hming = "no name"; }
 
     let seasonKey = getSeasonKey();
-    // Season hrang hrang in dah hrang ang: leaderboard/NOVEMBER-2026
     db.ref('leaderboard/' + seasonKey).push({
       name: hming,
       score: Number(score),
       date: Date.now()
     });
-
     document.getElementById("nameInput").value = "";
     document.getElementById("gameScore").textContent = "0";
   }
@@ -65,6 +63,7 @@ const firebaseConfig = {
   function showLeaderboard(){
     let seasonKey = getSeasonKey();
     db.ref('leaderboard/' + seasonKey).on('value', (snap)=>{
+console.log("mi eng zat nge:",snap.numChildren());
       let list = [];
       snap.forEach(c => list.push(c.val()));
       list.sort((a,b) => b.score - a.score); 
