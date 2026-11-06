@@ -80,13 +80,6 @@ align-items:center;
 justify-content:center;
 }
 
-#overlay{
-height:100%;
-width:100%;
-display:none;
-z-index:999;
-position:fixed;
-}
 #help{
 padding:16px;
 color:#fff;
@@ -195,7 +188,6 @@ justify-content: space-between;
   Score:<span id="score">0</span>
  </div>
 
-<div id="overlay"></div>
 <div id="help">
 <button onclick="hideHelp()">Back</button>
 <h3>Control</h3><br>
@@ -214,7 +206,7 @@ Blink: Double JUmp + Sweap down<br>
     <div id="seasonName" style="font-weight:bold; color:#2e7d32;">SEASON LOADING...</div>
     <div id="seasonTimer" style="font-size:13px; background:#1a2e1a; color:#a5d6a7; padding:5px 10px; border-radius:20px; margin-top:5px; display:inline-block;">⏳ Chhut mek...</div>
   </div>
-<button onclick="hideHelp()">Back</button>
+<button onclick="hideLead()">Back</button>
 <div class="lead"><span>Name</span><b>Score</b></div>
 <div id="leaderboard"></div>
 </div>
@@ -337,25 +329,19 @@ function onLoaded() {
 
 function leader(){
 document.getElementById('leaderScreen').style.display = 'block';
-overlay.style.display = 'block';
 }
 
 const help = document.getElementById('help');
-const overlay = document.getElementById('overlay');
 function helpC(){
-overlay.style.display = 'block';
 help.style.display = 'block';
 }
-overlay.onclick = function(){
-help.style.display = 'none';
-overlay.style.display = 'none';
+function hideLead(){
 document.getElementById('leaderScreen').style.display = 'none';
 }
 function hideHelp(){
 help.style.display = 'none';
-overlay.style.display = 'none';
-document.getElementById('leaderScreen').style.display = 'none';
 }
+
 
 function startGame(){
   document.getElementById('mainMenu').style.display = 'none';
