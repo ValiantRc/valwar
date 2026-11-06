@@ -64,10 +64,12 @@ const firebaseConfig = {
   // === 4. FIREBASE ATANGA LEADERBOARD EN - A LIVE IN ===
   function showLeaderboard(){
     let seasonKey = getSeasonKey();
-    db.ref('leaderboard/' + seasonKey).orderByChild('score').limitToLast(20).on('value', (snap)=>{
+    db.ref('leaderboard/' + seasonKey).on('value', (snap)=>{
       let list = [];
       snap.forEach(c => list.push(c.val()));
-      list.sort((a,b) => b.score - a.score); // A sang ber chung ah
+      list.sort((a,b) => b.score - a.score); 
+
+       list = list.slice(0, 20);
 
       let html = "";
       list.forEach((p, i) => {
