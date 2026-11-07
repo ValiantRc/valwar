@@ -65,7 +65,7 @@ const firebaseConfig = {
     db.ref('leaderboard/' + seasonKey).on('value', (snap)=>{
 console.log("mi eng zat nge:",snap.numChildren());
       let list = [];
-      snap.forEach(c => list.push(c.val()));
+      snap.forEach(c => {list.push(c.val()); });
       list.sort((a,b) => b.score - a.score); 
 
        list = list.slice(0, 20);
