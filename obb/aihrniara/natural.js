@@ -46,9 +46,9 @@ function createLung() {
 function createThingkungObstacle() {
   obstacle.push({
     x: canvas.width,
-    y: canvas.height - 300, // Lei atanga a sang lam - adjust rawh
-    kung: { w: 60, h: 130, xOffset: 20, yOffset: 80 }, // Kung position
-    hnah: { w: 110, h: 90, xOffset: -10, yOffset: 0 }, // Hnah position - chung lam
+    y: canvas.height - 600, // Lei atanga a sang lam - adjust rawh
+    kung: { w: 60, h: 800, xOffset: 20, yOffset: 80 }, // Kung position
+    hnah: { w: 250, h: 150, xOffset: -65, yOffset: -3 }, // Hnah position - chung lam
     type: "thingkung_full"
   });
 }
@@ -271,7 +271,7 @@ ctx.drawImage(sakhiImg, sakhiFrame * fw, 0, fw, sakhiImg.height, sakhiX, y, 80, 
       }
     }sakhiX -= speed - 4.5;
     if(sakhiX < -50){
-    sakhiX = canvas.width +800 + Math.random() * 1000;
+    sakhiX = canvas.width +800+ Math.random() * 1000;
     sakhiScored = false;
 }
   }
@@ -284,7 +284,7 @@ sialImg.src = 'sial.png';
 let sialFrame = 0;
 let sialFrameTimer = 0;
 let sialX = canvas.width +1500 + Math.random() * 2000;
-let sialY = canvas.height - 185;
+let sialY = canvas.height - 195;
 let sialScored = false;
 
 
@@ -301,11 +301,11 @@ function drawSial() {
 let fw = sialImg.width / 4;
 let y = sialY;
 
-ctx.drawImage(sialImg, sialFrame * fw, 0, fw, sialImg.height, sialX, y, 90, 55);
+ctx.drawImage(sialImg, sialFrame * fw, 0, fw, sialImg.height, sialX, y, 140, 70);
 
-  let isSialColliding = player.x < sialX + 90 &&
+  let isSialColliding = player.x < sialX + 140 &&
                          player.x + player.w > sialX &&
-                         player.y < y + 55 &&
+                         player.y < y + 70 &&
                          player.y + player.h > y;
 
   if(isSialColliding){
@@ -323,8 +323,8 @@ ctx.drawImage(sialImg, sialFrame * fw, 0, fw, sialImg.height, sialX, y, 90, 55);
           return;
       }
     }sialX -= speed - 4;
-    if(sialX < -50){
-    sialX = canvas.width + 800 + Math.random() * 900;
+    if(sialX < -200){
+    sialX = canvas.width + 800 + Math.random() * 1000;
     sialScored = false;
   }
 }
