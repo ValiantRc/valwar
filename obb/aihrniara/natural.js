@@ -284,7 +284,7 @@ sialImg.src = 'sial.png';
 let sialFrame = 0;
 let sialFrameTimer = 0;
 let sialX = canvas.width +1500 + Math.random() * 2000;
-let sialY = canvas.height - 80;
+let sialY = canvas.height - 70;
 let sialScored = false;
 
 
@@ -301,11 +301,11 @@ function drawSial() {
 let fw = sialImg.width / 4;
 let y = sialY;
 
-ctx.drawImage(sialImg, sialFrame * fw, 0, fw, sialImg.height, sialX, y, 65, 30);
+ctx.drawImage(sialImg, sialFrame * fw, 0, fw, sialImg.height, sialX, y, 60, 25);
 
-  let isSialColliding = player.x < sialX + 65 &&
+  let isSialColliding = player.x < sialX + 60 &&
                          player.x + player.w > sialX &&
-                         player.y < y + 30 &&
+                         player.y < y + 25 &&
                          player.y + player.h > y;
 
   if(isSialColliding){
