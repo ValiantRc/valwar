@@ -48,7 +48,7 @@ function createThingkungObstacle() {
     x: canvas.width,
     y: canvas.height - 150, // Lei atanga a sang lam - adjust rawh
     kung: { w: 55, h: 80, xOffset: 30, yOffset: 60 }, // Kung position
-    hnah: { w: 100, h: 65, xOffset: -11, yOffset: 3 }, // Hnah position - chung lam
+    hnah: { w: 100, h: 65, xOffset: -7, yOffset: 3 }, // Hnah position - chung lam
     type: "thingkung_full"
   });
 }
