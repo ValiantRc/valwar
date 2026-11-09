@@ -3,7 +3,7 @@ let obstacle = [];
 let  spawnTimer = 0;
 let score = 0;
 let  nextSpawnTime = 300;
-let  speed = 6;
+let  speed = 5;
 
 let scoreN = document.getElementById('score');
 let scoreInterval = null;
