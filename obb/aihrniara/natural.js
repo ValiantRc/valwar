@@ -147,6 +147,7 @@ let rulSpawn = 0;
 let rulObstacle = [];
 let rulSpeed = 4;
 let floatText = []
+let rulWasOff = true;
 
 function createRul(){
 rulObstacle.push({
@@ -171,6 +172,13 @@ rulSpawnTime = Math.floor(Math.random() * 800) + 300;
 for(let i = rulObstacle.length - 1; i >= 0; i--){
 let obs = rulObstacle[i];
 obs.x -= rulSpeed;
+	if(rulX <= canvas.width - 10 && rulWasOff){
+  snakeSound();
+  rulWasOff = false;
+}
+if(rulX > canvas.width){
+  rulWasOff = true;
+}
 ctx.drawImage(rulImg, obs.x, obs.y, obs.w, obs.h);
 
 let isColliding = player.x < obs.x + obs.w  &&
@@ -232,6 +240,7 @@ let sakhiFrameTimer = 0;
 let sakhiX = canvas.width +800 + Math.random() * 1000;
 let sakhiY = canvas.height - 45;
 let sakhiScored = false;
+let sakhiWasOff = true;
 
 const heightOffset = [0, -10, -40, 0];
 
@@ -247,6 +256,14 @@ function drawSakhi() {
   
 let fw = sakhiImg.width / 4;
 let y = sakhiY + heightOffset[sakhiFrame];
+
+	if(sakhiX <= canvas.width - 10 && sakhiWasOff){
+  deerSound();
+  sakhiWasOff = false;
+}
+if(sakhiX > canvas.width){
+  sakhiWasOff = true;
+}
 
 ctx.drawImage(sakhiImg, sakhiFrame * fw, 0, fw, sakhiImg.height, sakhiX, y, 38, 23);
 
@@ -286,7 +303,7 @@ let sialFrameTimer = 0;
 let sialX = canvas.width +1500 + Math.random() * 2000;
 let sialY = canvas.height - 46;
 let sialScored = false;
-
+let sialWasOff = true;
 
 function drawSial() {
   
@@ -300,6 +317,14 @@ function drawSial() {
   
 let fw = sialImg.width / 4;
 let y = sialY;
+
+	if(sialX <= canvas.width - 10 && sialWasOff){
+  bullSound();
+  sialWasOff = false;
+}
+if(sialX > canvas.width){
+  sialWasOff = true;
+}
 
 ctx.drawImage(sialImg, sialFrame * fw, 0, fw, sialImg.height, sialX, y, 60, 25);
 
