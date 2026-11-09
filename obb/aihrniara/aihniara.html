@@ -293,6 +293,10 @@ blinkS: "blink.mp3",
 bgMusic: "bgmusic.mp3",
 gOverS: "dead.mp3",
 muS: "mu.mp3",
+	snakeS: "snake.mp3",
+	bullS: "bull.mp3",
+	deerS: "deer.mp3",
+	menuS: "menuS",
 };
 
 function loadAllAssets() {
@@ -338,6 +342,7 @@ function onLoaded() {
     setTimeout(() => {
       document.getElementById('loadingNa').style.display = 'none';
       document.getElementById('mainMenu').style.display = 'flex';
+		menuS();
 },500);
 }
 }
@@ -368,6 +373,8 @@ function startGame(){
   startMusic();
   gameReady = true;
  isGameOver = false;
+	menuS.pause();
+	menuS.currentTime = 0;
 }
 
 function back(){
