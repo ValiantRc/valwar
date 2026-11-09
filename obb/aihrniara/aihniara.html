@@ -296,7 +296,7 @@ muS: "mu.mp3",
 	snakeS: "snake.mp3",
 	bullS: "bull.mp3",
 	deerS: "deer.mp3",
-	menuS: "menuS",
+	menuS: "menu.mp3",
 };
 
 function loadAllAssets() {
@@ -342,7 +342,7 @@ function onLoaded() {
     setTimeout(() => {
       document.getElementById('loadingNa').style.display = 'none';
       document.getElementById('mainMenu').style.display = 'flex';
-		menuS();
+		menuSound();
 },500);
 }
 }
