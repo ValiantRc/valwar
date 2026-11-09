@@ -178,6 +178,7 @@ obs.x -= rulSpeed;
 }
 if(rulX > canvas.width){
   rulWasOff = true;
+	snakeS.currentTime = 0;
 }
 ctx.drawImage(rulImg, obs.x, obs.y, obs.w, obs.h);
 
@@ -263,7 +264,6 @@ let y = sakhiY + heightOffset[sakhiFrame];
 }
 if(sakhiX > canvas.width){
   sakhiWasOff = true;
-	deerS.pause();
 	deerS.currentTime = 0;
 }
 
@@ -326,7 +326,6 @@ let y = sialY;
 }
 if(sialX > canvas.width){
   sialWasOff = true;
-	bullS.pause();
 	bullS.currentTime = 0;
 }
 
