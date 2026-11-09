@@ -12,9 +12,9 @@ slashImg.src = 'slash.png'
 
 let player = {
   x: canvas.width / 20,
-  y: canvas.height - 200,
-  w: 50,
-  h: 80,
+  y: canvas.height - 43,
+  w: 25,
+  h: 25,
   vy: 0,
   gravity: 0.7,
   onGround: true,
@@ -31,7 +31,7 @@ function startIfReady(){
   if(loaded === 2){
     spriteW = playerImg.width / spriteCols;
     spriteH = playerImg.height / spriteRows;
-    player.y = canvas.height - 200;
+    player.y = canvas.height - 43;
   }
 }
 playerImg.onload = startIfReady();
@@ -58,8 +58,8 @@ function triggerSlash(){
 slash.active= true;
 slash.frame= 0;
 slash.timer= 0;
-slash.x = player.x - 10;
-slash.y = player.y - 5;
+slash.x = player.x - 5;
+slash.y = player.y - 2;
 }
 
 function updateSlash(){
@@ -81,7 +81,7 @@ let fh = slashImg.height;
 
 ctx.save();
 
-ctx.drawImage(slashImg, slash.frame * fw, 0, fw, fh, slash.x, slash.y, fw / 5, fh / 5);
+ctx.drawImage(slashImg, slash.frame * fw, 0, fw, fh, slash.x, slash.y, fw / 12, fh / 12);
 ctx.restore();
 }
 
@@ -90,8 +90,8 @@ function draw() {
   if(!player.onGround) {
     player.vy += player.gravity
     player.y += player.vy
-    if(player.y >= ground.y - 30) {
-      player.y = ground.y - 30
+    if(player.y >= ground.y - 13) {
+      player.y = ground.y - 13
       player.vy = 0
       player.onGround = true
       player.jumpCount = 0
@@ -155,7 +155,7 @@ spriteH = rollImg.height / 1;
 
   // Duck lai a hniam dan
   let drawH = player.state === 'duck'? player.h * 0.6 : player.h
-  let drawY = player.state === 'duck'? player.y + player.h*0.4 : player.y - 16
+  let drawY = player.state === 'duck'? player.y + player.h*0.4 : player.y - 5
 
   ctx.drawImage(sheetToUse, sx, sy, sw, sh, player.x, drawY, player.w, drawH)
 }
