@@ -46,9 +46,9 @@ function createLung() {
 function createThingkungObstacle() {
   obstacle.push({
     x: canvas.width,
-    y: canvas.height - 300, // Lei atanga a sang lam - adjust rawh
-    kung: { w: 20, h: 200, xOffset: 10, yOffset: 30 }, // Kung position
-    hnah: { w: 100, h: 65, xOffset: -34, yOffset: -1.5 }, // Hnah position - chung lam
+    y: canvas.height - 150, // Lei atanga a sang lam - adjust rawh
+    kung: { w: 20, h: 80, xOffset: 30, yOffset: 60 }, // Kung position
+    hnah: { w: 100, h: 65, xOffset: -15, yOffset: 3 }, // Hnah position - chung lam
     type: "thingkung_full"
   });
 }
@@ -233,7 +233,7 @@ let sakhiX = canvas.width +800 + Math.random() * 1000;
 let sakhiY = canvas.height - 45;
 let sakhiScored = false;
 
-const heightOffset = [0, -10, -45, 0];
+const heightOffset = [0, -10, -40, 0];
 
 function drawSakhi() {
   
@@ -284,7 +284,7 @@ sialImg.src = 'sial.png';
 let sialFrame = 0;
 let sialFrameTimer = 0;
 let sialX = canvas.width +1500 + Math.random() * 2000;
-let sialY = canvas.height - 35;
+let sialY = canvas.height - 46;
 let sialScored = false;
 
 
