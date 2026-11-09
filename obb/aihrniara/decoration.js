@@ -59,7 +59,7 @@ function drawBird() {
               birdScore = false;
               return;
       }
-  birdX -= speed - 5.4; // Thlawk kal zel
+  birdX -= speed - 4.4; // Thlawk kal zel
   if (birdX < -50) {
     birdX = canvas.width;
     birdY = Math.random() * 100 + 2;
@@ -135,7 +135,7 @@ let background = {
 }
 
 function drawBack() {
-  background.x -= speed - 5.5;
+  background.x -= speed - 4.5;
   if(background.x <= -canvas.width){
     background.x = 0;
   }
