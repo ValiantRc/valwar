@@ -151,8 +151,8 @@ function createThlam(){
 thlamobs.push({
 x:canvas.width,
 y:canvas.height - 44,
-w:30,
-h:30,
+w:50,
+h:50,
 });
 }
 
