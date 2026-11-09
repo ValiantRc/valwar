@@ -263,6 +263,8 @@ let y = sakhiY + heightOffset[sakhiFrame];
 }
 if(sakhiX > canvas.width){
   sakhiWasOff = true;
+	deerS.pause();
+	deerS.currentTime = 0;
 }
 
 ctx.drawImage(sakhiImg, sakhiFrame * fw, 0, fw, sakhiImg.height, sakhiX, y, 38, 23);
