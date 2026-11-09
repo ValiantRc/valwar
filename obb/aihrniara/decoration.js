@@ -139,8 +139,8 @@ function drawBack() {
   if(background.x <= -canvas.width){
     background.x = 0;
   }
-  ctx.drawImage(backImg,background.x,canvas.height-305,canvas.width,160);
-  ctx.drawImage(backImg,background.x + canvas.width,canvas.height-305,canvas.width,160);
+  ctx.drawImage(backImg,background.x,canvas.height-75,canvas.width,50);
+  ctx.drawImage(backImg,background.x + canvas.width,canvas.height-75,canvas.width,50);
 }
 
  let thlamsp = 0;
