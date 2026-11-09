@@ -1,7 +1,11 @@
+const gameContainer = document.getElementById('gameContainer');
 const canvas = document.getElementById('game')
 const ctx = canvas.getContext('2d')
-canvas.width = window.innerWidth
-canvas.height = window.innerHeight
+
+function resizeCanvas(){
+canvas.width = gameContainer.clientWidth;
+canvas.height = gameContainer.clientHeight;
+}
 
 const sunImg = new Image();
 sunImg.src = 'ni.png';
@@ -10,7 +14,7 @@ thlamImg.src = 'thlam.png';
 
 function drawSun() {
   // Chung lam ding lam ah
-  ctx.drawImage(sunImg, canvas.width - 500, 20, 90, 90);
+  ctx.drawImage(sunImg, canvas.width - 200, 10, 45, 45);
 }
 
 const birdSheet = new Image();
@@ -19,7 +23,7 @@ birdSheet.src = 'sava.png';
 let birdFrame = 0;
 let birdFrameTimer = 0;
 let birdX = canvas.width;
-let birdY = 0.1;
+let birdY = 0.5;
 let birdTimer = 0;
 let birdScore = false;
 
@@ -37,11 +41,11 @@ function drawBird() {
   ctx.drawImage(
     birdSheet,
     birdFrame * frameWidth, 0, frameWidth, birdSheet.height, // cut
-    birdX, birdY, 35, 25 // draw
+    birdX, birdY, 17, 11 // draw
   );
-   let isBirdColliding = player.x < birdX + 35 &&
+   let isBirdColliding = player.x < birdX + 17 &&
                          player.x + player.w > birdX &&
-                         player.y < birdY + 25 &&
+                         player.y < birdY + 11 &&
                          player.y + player.h > birdY;
 
   if(isBirdColliding){
@@ -51,14 +55,14 @@ function drawBird() {
               attackTimer = 18;
               
               birdX = canvas.width + Math.random() * 500;
-              birdY = Math.random() * 350 + 20;
+              birdY = Math.random() * 100 + 2;
               birdScore = false;
               return;
       }
-  birdX -= 0.6; // Thlawk kal zel
+  birdX -= speed - 5.4; // Thlawk kal zel
   if (birdX < -50) {
     birdX = canvas.width;
-    birdY = Math.random() * 350 + 20;
+    birdY = Math.random() * 100 + 2;
     birdScore = false;
   }
 }
@@ -70,9 +74,9 @@ let cloudTimer = 0;
 function createCloud() {
   clouds.push({
     x: canvas.width + 100,
-    y: Math.random() * 100 + 20, // Chung lam ah chauh
-    w: Math.random() * 80 + 60,  // A lian leh te
-    h: Math.random() * 30 + 20,
+    y: Math.random() * 70 + 9, // Chung lam ah chauh
+    w: Math.random() * 50 + 30,  // A lian leh te
+    h: Math.random() * 15 + 10,
     speed: Math.random() * 0.8 + 0.3 // Muang deuh in - decoration
   });
 }
@@ -112,12 +116,11 @@ let ground = {
   x:0,
   y:canvas.height - 170,
   height:200,
-  speed: 6,
 }
 
 
 function drawGround() {
-  ground.x -= ground.speed;
+  ground.x -= speed;
   if(ground.x <= -canvas.width){
     ground.x = 0;
   }
@@ -129,11 +132,10 @@ function drawGround() {
 
 let background = {
   x:0,
-  speed:0.5,
 }
 
 function drawBack() {
-  background.x -= background.speed
+  background.x -= speed - 5.5;
   if(background.x <= -canvas.width){
     background.x = 0;
   }
@@ -148,9 +150,9 @@ function drawBack() {
 function createThlam(){
 thlamobs.push({
 x:canvas.width,
-y:canvas.height - 230,
-w:100,
-h:100,
+y:canvas.height - 110,
+w:50,
+h:50,
 });
 }
 
@@ -175,7 +177,7 @@ muImg.src = 'mu.png'
 let muFrame = 0;
 let muFrameTimer = 0;
 let muX = canvas.width +800 + Math.random() * 8500;
-let muY = Math.random() * 350 + 20;
+let muY = Math.random() * 70 + 2;
 let muScored = false;
 let muWasOff = true;
 
@@ -197,11 +199,11 @@ if(muX > canvas.width){
   muWasOff = true;
 }
   
-ctx.drawImage(muImg, muFrame * fw, 0, fw, muImg.height, muX, y, 70, 40);
+ctx.drawImage(muImg, muFrame * fw, 0, fw, muImg.height, muX, y, 35, 20);
 
-  let isMuColliding = player.x < muX + 70 &&
+  let isMuColliding = player.x < muX + 35 &&
                          player.x + player.w > muX &&
-                         player.y < y + 40 &&
+                         player.y < y + 20 &&
                          player.y + player.h > y;
 
   if(isMuColliding){
@@ -213,13 +215,13 @@ ctx.drawImage(muImg, muFrame * fw, 0, fw, muImg.height, muX, y, 70, 40);
           
        
           muX = canvas.width + 800 + Math.random() * 8500;
-          muY = Math.random() * 350 + 20;
+          muY = Math.random() * 70 + 2;
           muScored = false;
           return;
       }muX -= speed + 1;
     if(muX < -50){
     muX = canvas.width +800 + Math.random() * 8500;
-    muY = Math.random() * 350 + 20;
+    muY = Math.random() * 70 + 2;
     muScored = false;
   }
 }
