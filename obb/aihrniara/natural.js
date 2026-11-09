@@ -172,11 +172,11 @@ rulSpawnTime = Math.floor(Math.random() * 800) + 300;
 for(let i = rulObstacle.length - 1; i >= 0; i--){
 let obs = rulObstacle[i];
 obs.x -= rulSpeed;
-	if(rulX <= canvas.width - 10 && rulWasOff){
+	if(obs.x <= canvas.width - 10 && rulWasOff){
   snakeSound();
   rulWasOff = false;
 }
-if(rulX > canvas.width){
+if(obs.x > canvas.width){
   rulWasOff = true;
 	snakeS.currentTime = 0;
 }
