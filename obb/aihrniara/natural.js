@@ -47,8 +47,8 @@ function createThingkungObstacle() {
   obstacle.push({
     x: canvas.width,
     y: canvas.height - 300, // Lei atanga a sang lam - adjust rawh
-    kung: { w: 30, h: 400, xOffset: 10, yOffset: 40 }, // Kung position
-    hnah: { w: 200, h: 75, xOffset: -34, yOffset: -1.5 }, // Hnah position - chung lam
+    kung: { w: 20, h: 200, xOffset: 10, yOffset: 40 }, // Kung position
+    hnah: { w: 100, h: 65, xOffset: -34, yOffset: -1.5 }, // Hnah position - chung lam
     type: "thingkung_full"
   });
 }
@@ -284,7 +284,7 @@ sialImg.src = 'sial.png';
 let sialFrame = 0;
 let sialFrameTimer = 0;
 let sialX = canvas.width +1500 + Math.random() * 2000;
-let sialY = canvas.height - 40;
+let sialY = canvas.height - 30;
 let sialScored = false;
 
 
