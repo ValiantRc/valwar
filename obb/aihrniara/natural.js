@@ -284,7 +284,7 @@ sialImg.src = 'sial.png';
 let sialFrame = 0;
 let sialFrameTimer = 0;
 let sialX = canvas.width +1500 + Math.random() * 2000;
-let sialY = canvas.height - 70;
+let sialY = canvas.height - 55;
 let sialScored = false;
 
 
