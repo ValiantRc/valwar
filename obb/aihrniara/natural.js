@@ -326,6 +326,8 @@ let y = sialY;
 }
 if(sialX > canvas.width){
   sialWasOff = true;
+	bullS.pause();
+	bullS.currentTime = 0;
 }
 
 ctx.drawImage(sialImg, sialFrame * fw, 0, fw, sialImg.height, sialX, y, 60, 25);
