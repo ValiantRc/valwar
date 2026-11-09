@@ -150,7 +150,7 @@ function drawBack() {
 function createThlam(){
 thlamobs.push({
 x:canvas.width,
-y:canvas.height - 50,
+y:canvas.height - 70,
 w:50,
 h:50,
 });
