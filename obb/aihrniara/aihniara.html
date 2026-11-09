@@ -241,7 +241,11 @@ function okScreen(){
 
 let gameDiv = document.getElementById('gameContainer');
 if(gameDiv.requestFullscreen){
-gameDiv.requestFullscreen().catch(()=>{});
+gameDiv.requestFullscreen().then(()=>{
+if(screen.orientation && screen.orientation.lock){
+screen.orientation.lock('landscape').catch(()=>{});
+}
+}).catch(()=>{});
 }else if(gameDiv.webkitRequestFullscreen){
 gameDiv.webkitRequestFullscreen();
 }
@@ -416,7 +420,7 @@ canvas.addEventListener('touchstart', e => {
 canvas.addEventListener('touchend', e => {
   let diff = startY - e.changedTouches[0].clientY
 
-  if(diff > 25 && player.jumpCount < player.maxJump && !player.isBlink) { // Swipe chho = Zuang
+  if(diff > 20 && player.jumpCount < player.maxJump && !player.isBlink) { // Swipe chho = Zuang
     player.vy = -18
     player.onGround = false
     player.jumpCount++
@@ -427,11 +431,11 @@ canvas.addEventListener('touchend', e => {
     jumpSound();
     }
   }
-else if(diff < - 25 && player.isBlink){
+else if(diff < - 20 && player.isBlink){
 player.state = 'role'
 player.onGround = true
 }
-  else if(diff < -25 && player.onGround) { 
+  else if(diff < -20 && player.onGround) { 
    if(player.isDuck){
 	player.state = 'blink'
 	player.isBlink = true
