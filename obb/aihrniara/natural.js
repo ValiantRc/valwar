@@ -36,9 +36,9 @@ hnahImg.src = 'hnah.png'
 function createLung() {
   obstacle.push({
     x:canvas.width,
-    y:canvas.height - 170,
-    w:50,
-    h:50,
+    y:canvas.height - 43,
+    w:25,
+    h:25,
   });
 }
 
@@ -46,9 +46,9 @@ function createLung() {
 function createThingkungObstacle() {
   obstacle.push({
     x: canvas.width,
-    y: canvas.height - 600, // Lei atanga a sang lam - adjust rawh
-    kung: { w: 60, h: 800, xOffset: 20, yOffset: 80 }, // Kung position
-    hnah: { w: 250, h: 150, xOffset: -65, yOffset: -3 }, // Hnah position - chung lam
+    y: canvas.height - 300, // Lei atanga a sang lam - adjust rawh
+    kung: { w: 30, h: 400, xOffset: 10, yOffset: 40 }, // Kung position
+    hnah: { w: 200, h: 75, xOffset: -34, yOffset: -1.5 }, // Hnah position - chung lam
     type: "thingkung_full"
   });
 }
@@ -145,15 +145,15 @@ rulImg.src = 'rul.png'
 let rulSpawnTime = 750;
 let rulSpawn = 0;
 let rulObstacle = [];
-let rulSpeed = 6;
+let rulSpeed = 5;
 let floatText = []
 
 function createRul(){
 rulObstacle.push({
 x:canvas.width,
-y:canvas.height - 170,
-w:50,
-h:50,
+y:canvas.height - 43,
+w:25,
+h:25,
 type:'rul',
 scored: false,
 });
@@ -214,7 +214,7 @@ f.life--;
 ctx.save();
 ctx.globalAlpha = f.life / 60;
 ctx.fillStyle = "#00ff00";
-ctx.font = "bolt 22px Arial";
+ctx.font = "bolt 10px Arial";
 ctx.fillText(f.text, f.x, f.y);
 ctx.restore();
 
@@ -230,7 +230,7 @@ sakhiImg.src = 'sakhi.png';
 let sakhiFrame = 0;
 let sakhiFrameTimer = 0;
 let sakhiX = canvas.width +800 + Math.random() * 1000;
-let sakhiY = canvas.height - 185;
+let sakhiY = canvas.height - 45;
 let sakhiScored = false;
 
 const heightOffset = [0, -10, -45, 0];
@@ -248,11 +248,11 @@ function drawSakhi() {
 let fw = sakhiImg.width / 4;
 let y = sakhiY + heightOffset[sakhiFrame];
 
-ctx.drawImage(sakhiImg, sakhiFrame * fw, 0, fw, sakhiImg.height, sakhiX, y, 80, 50);
+ctx.drawImage(sakhiImg, sakhiFrame * fw, 0, fw, sakhiImg.height, sakhiX, y, 40, 25);
 
-  let isSakhiColliding = player.x < sakhiX + 80 &&
+  let isSakhiColliding = player.x < sakhiX + 40 &&
                          player.x + player.w > sakhiX &&
-                         player.y < y + 50 &&
+                         player.y < y + 25 &&
                          player.y + player.h > y;
 
   if(isSakhiColliding){
@@ -269,7 +269,7 @@ ctx.drawImage(sakhiImg, sakhiFrame * fw, 0, fw, sakhiImg.height, sakhiX, y, 80, 
           sakhiScored = false;
           return;
       }
-    }sakhiX -= speed - 4.5;
+    }sakhiX -= speed - 3.5;
     if(sakhiX < -50){
     sakhiX = canvas.width +800+ Math.random() * 1000;
     sakhiScored = false;
@@ -284,7 +284,7 @@ sialImg.src = 'sial.png';
 let sialFrame = 0;
 let sialFrameTimer = 0;
 let sialX = canvas.width +1500 + Math.random() * 2000;
-let sialY = canvas.height - 195;
+let sialY = canvas.height - 85;
 let sialScored = false;
 
 
@@ -301,11 +301,11 @@ function drawSial() {
 let fw = sialImg.width / 4;
 let y = sialY;
 
-ctx.drawImage(sialImg, sialFrame * fw, 0, fw, sialImg.height, sialX, y, 140, 70);
+ctx.drawImage(sialImg, sialFrame * fw, 0, fw, sialImg.height, sialX, y, 70, 35);
 
-  let isSialColliding = player.x < sialX + 140 &&
+  let isSialColliding = player.x < sialX + 70 &&
                          player.x + player.w > sialX &&
-                         player.y < y + 70 &&
+                         player.y < y + 35 &&
                          player.y + player.h > y;
 
   if(isSialColliding){
@@ -322,7 +322,7 @@ ctx.drawImage(sialImg, sialFrame * fw, 0, fw, sialImg.height, sialX, y, 140, 70)
           sialScored = false;
           return;
       }
-    }sialX -= speed - 4;
+    }sialX -= speed - 3;
     if(sialX < -200){
     sialX = canvas.width + 800 + Math.random() * 1000;
     sialScored = false;
