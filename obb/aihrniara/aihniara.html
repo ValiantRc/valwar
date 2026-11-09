@@ -430,7 +430,7 @@ canvas.addEventListener('touchend', e => {
   let diff = startY - e.changedTouches[0].clientY
 
   if(diff > 20 && player.jumpCount < player.maxJump && !player.isBlink) { // Swipe chho = Zuang
-    player.vy = -18
+    player.vy = -8.5
     player.onGround = false
     player.jumpCount++
     if(player.jumpCount == 2){
@@ -453,7 +453,7 @@ player.onGround = true
 	player.frameCount = 0
 
 	let originalX  = player.x
-	let blinkDistance = 100
+	let blinkDistance = 65
 
 	player.x = blinkDistance
 	blinkSound();
@@ -488,7 +488,7 @@ player.onGround = true
 window.addEventListener('keydown', (e) => {
 
   if((e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'KeyW') && player.jumpCount < player.maxJump && !player.isBlink){
-    player.vy = -18
+    player.vy = -8.5
     player.onGround = false
     player.jumpCount++
     if(player.jumpCount == 2){
@@ -512,7 +512,7 @@ window.addEventListener('keydown', (e) => {
 	player.frameCount = 0
 
 	let originalX  = player.x
-	let blinkDistance = 100
+	let blinkDistance = 65
 
 	player.x = blinkDistance
 	blinkSound();
