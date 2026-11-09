@@ -114,8 +114,8 @@ backImg.src = 'background.png'
 
 let ground = {
   x:0,
-  y:canvas.height - 170,
-  height:200,
+  y:canvas.height - 30,
+  height:40,
 }
 
 
