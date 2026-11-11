@@ -182,8 +182,8 @@ var thu=[
 {lusei:"chim",hmar:"chim",desc:"english:collapse/fall down",gr:"adj."},
 {lusei:"chîm",hmar:"chîm",desc:"english:submerged/assimilated",gr:"adj."},
 {lusei:"chin",hmar:"chin",desc:"tehfung",gr:"adj."},
-{lusei:"chip",hmar:"chip",desc:"thil eng emaw seh kerh kerh emaw, ṭhial neuh neuh.",gr:"v."}
-{lusei:"chîp",hmar:"chîp",desc:"english:shut/close",gr:"v. / adj."}
+{lusei:"chip",hmar:"chip",desc:"thil eng emaw seh kerh kerh emaw, ṭhial neuh neuh.",gr:"v."},
+{lusei:"chîp",hmar:"chîp",desc:"english:shut/close",gr:"v. / adj."},
 
 {lusei:"adang",hmar:"adang",desc:"english:other",gr:"adj."},
 {lusei:"adawt",hmar:"adawt",desc:"english:next",gr:"adj."},
