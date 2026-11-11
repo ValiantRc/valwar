@@ -1,5 +1,6 @@
 const data = [
-"Hmeihchhe chungah an thinrim ngai love, kan ngamsa reng an ni.",
-"Sialrang in Sialrang a hring, Sakawl in Sakawl a hring.",
-"kawngchhuk a awmchuan kawng chho a awm."
+"Beila, bei nawn rawh.",
+"Sâwm thah ni-ah pawh vawikhat lungngaih a awm ṭhin.",
+"kawngchhuk a awmchuan, kawng chho a awm.",
+"Hlawhchhamna tamtak lakah pawh beidawnlohna hi hlawhtlinna chu a ni.",
 ];
